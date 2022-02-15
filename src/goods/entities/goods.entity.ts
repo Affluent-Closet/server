@@ -1,5 +1,11 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
+export enum Category {
+  PANTS = 'pants',
+  SHIRTS = 'shirts',
+  SHOES = 'shoes',
+}
+
 @Entity()
 export class Goods extends BaseEntity {
   // 상품 ID
@@ -8,7 +14,7 @@ export class Goods extends BaseEntity {
 
   // 상품 카테고리
   @Column()
-  category: string;
+  category: Category;
 
   // 상품 이름
   @Column()
@@ -16,7 +22,7 @@ export class Goods extends BaseEntity {
 
   // 상품 가격
   @Column()
-  price: string;
+  price: number;
 
   // 상품 할인율
   @Column()
@@ -28,7 +34,7 @@ export class Goods extends BaseEntity {
 
   // 상품 상세정보
   @Column()
-  detail: string[];
+  detail: string;
 
   // 상품 썸네일
   @Column()
@@ -39,6 +45,6 @@ export class Goods extends BaseEntity {
   sellnum: number;
 
   //생성시간
-  @Column()
-  createAt: Date;
+  // @Column()
+  // createAt: Date;
 }
