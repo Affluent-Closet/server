@@ -1,4 +1,10 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  Unique,
+} from 'typeorm';
 
 export enum Category {
   PANTS = 'pants',
@@ -7,6 +13,7 @@ export enum Category {
 }
 
 @Entity()
+@Unique(['id'])
 export class Goods extends BaseEntity {
   // 상품 ID
   @PrimaryGeneratedColumn()
