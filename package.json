@@ -23,7 +23,7 @@
     "web": "npm run start:prod"
   },
   "dependencies": {
-    "@nestjs/common": "^6.11.11",
+    "@nestjs/common": "^8.3.1",
     "@nestjs/core": "^8.0.0",
     "@nestjs/jwt": "^8.0.0",
     "@nestjs/passport": "^8.1.0",
