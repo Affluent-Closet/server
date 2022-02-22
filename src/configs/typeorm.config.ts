@@ -15,4 +15,7 @@ export const typeORMconfig: TypeOrmModuleOptions = {
   url: process.env.DATABASE_URL,
   entities: [__dirname + '/../**/*.entity.{js,ts}'],
   synchronize: dbConfig.synchronize,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 };
