@@ -1,13 +1,10 @@
 {
   "name": "server",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "쇼핑몰 프로젝트",
+  "author": "JongHyun",
   "private": true,
   "license": "UNLICENSED",
-  "engines": {
-    "node": "v14.16.0"
-  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
