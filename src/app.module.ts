@@ -10,9 +10,9 @@ import { ImageModule } from './image/image.module';
     TypeOrmModule.forRoot(typeORMconfig),
     GoodsModule,
     ImageModule,
-    // ConfigModule.forRoot({
-    //   isGlobal: true,
-    // }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
   ],
 })
 export class AppModule {}
