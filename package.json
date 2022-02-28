@@ -4,11 +4,12 @@
   "description": "쇼핑몰 프로젝트",
   "author": "JongHyun",
   "license": "UNLICENSED",
+  
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "node --optimize_for_size --max_old_space_size=460 dist/main",
+    "start": "node dist/main",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
