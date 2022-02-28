@@ -9,7 +9,7 @@
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "serve -s build",
+    "start": "node dist/main",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
@@ -20,8 +20,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prestart": "rimraf dist && npm run build",
-    "web": "npm run start:prod",
-    "heroku-postbuild": "npm run build"
+    "web": "npm run start:prod"
   },
   "dependencies": {
     "@nestjs/common": "^8.3.1",
@@ -52,7 +51,6 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "serve": "^13.0.2",
     "typeorm": "^0.2.41",
     "uuid": "^8.3.2"
   },
