@@ -35,7 +35,7 @@ export class Goods extends Base {
   stock: number;
 
   // 상품 상세정보
-  @Column()
+  @Column({ array: true })
   detail: string[];
 
   // 상품 썸네일
