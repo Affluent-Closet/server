@@ -12,6 +12,6 @@ const s3 = new AWS.S3();
 @Injectable()
 export class ImageService {
   async uploadImage(files) {
-    return 'SUCESS';
+    return 'SUCCESS';
   }
 }

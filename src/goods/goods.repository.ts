@@ -6,22 +6,8 @@ import { Goods } from './entities/goods.entity';
 @EntityRepository(Goods)
 export class GoodsRepository extends Repository<Goods> {
   async createGoods(createGoodsDto: CreateGoodsDto): Promise<Goods> {
-    const { category, name, price, discount, stock, detail, thumbnail } =
-      createGoodsDto;
-
-    const goods = this.create({
-      category,
-      name,
-      price,
-      discount,
-      stock,
-      detail,
-      thumbnail,
-      sellnum: 0,
-    });
-
+    const goods = this.create({ ...createGoodsDto });
     await this.save(goods);
-
     return goods;
   }
 }
