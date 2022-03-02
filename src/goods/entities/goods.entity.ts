@@ -9,7 +9,7 @@ export enum Category {
 
 @Entity()
 @Unique(['id'])
-export class Goods extends Base {
+export class Goods {
   // 상품 ID
   @PrimaryGeneratedColumn()
   id: number;
