@@ -8,6 +8,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { CreateGoodsDto } from './dto/create-goods.dto';
+import { UpdateGoodsDto } from './dto/update-goods.dto';
 import { Goods } from './entities/goods.entity';
 import { GoodsService } from './goods.service';
 
@@ -17,30 +18,35 @@ export class GoodsController {
   constructor(private goodsService: GoodsService) {}
 
   //(Post) localhost:3000/goods
+  //상품정보 생성
   @Post('')
   createGoods(@Body() createGoodsDto: CreateGoodsDto): Promise<Goods> {
     return this.goodsService.createGoods(createGoodsDto);
   }
 
   //(Get) localhost:3000/goods
+  //모든 상품 정보 불러오기
   @Get('')
   getAllGoods(): Promise<Goods[]> {
     return this.goodsService.getAllGoods();
   }
 
   //(Get) localhost:3000/goods/:id
+  //상품 한개 정보 불러오기
   @Get('/:id')
   getGoodsById(@Param('id', ParseIntPipe) id: number): Promise<Goods> {
     return this.goodsService.getGoodsById(id);
   }
 
-  // @Post('/:id/update')
-  // updateGoods(
-  //   @Param('id') id:number,
-  //   @Body('goods')
-  // ):Promise<Goods>{
-  //   return this.goodsService.updateGoods(id, )
-  // }
+  //(Post) localhost:3000/goods/:id/update
+  //제품 업데이트 하기
+  @Post('/:id/update')
+  updateGoods(
+    @Param('id') id: number,
+    @Body() updateGoodsDto: UpdateGoodsDto,
+  ): Promise<Goods> {
+    return this.goodsService.updateGoods(id, updateGoodsDto);
+  }
 
   @Delete('/:id')
   deleteGoods(@Param('id', ParseIntPipe) id: number) {
