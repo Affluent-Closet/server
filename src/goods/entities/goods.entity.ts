@@ -1,3 +1,4 @@
+import { IsArray } from 'class-validator';
 import { Base } from 'src/common/entities/base.entity';
 import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
@@ -9,7 +10,7 @@ export enum Category {
 
 @Entity()
 @Unique(['id'])
-export class Goods extends Base{
+export class Goods extends Base {
   // 상품 ID
   @PrimaryGeneratedColumn()
   id: number;
@@ -36,7 +37,8 @@ export class Goods extends Base{
 
   // 상품 상세정보
   @Column({ array: true })
-  detail: string;
+  @IsArray()
+  detail: string[];
 
   // 상품 썸네일
   @Column()
