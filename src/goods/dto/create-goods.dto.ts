@@ -18,7 +18,7 @@ export class CreateGoodsDto {
   stock: number;
 
   @IsNotEmpty()
-  detail: string[];
+  detail: string;
 
   @IsNotEmpty()
   thumbnail: string;
