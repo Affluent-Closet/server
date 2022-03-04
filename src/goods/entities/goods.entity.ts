@@ -36,9 +36,9 @@ export class Goods extends Base {
   stock: number;
 
   // 상품 상세정보
-  @Column({ array: true })
+  @Column('text', { array: true })
   @IsArray()
-  detail: string;
+  detail: string[];
 
   // 상품 썸네일
   @Column()
