@@ -4,9 +4,6 @@
   "description": "쇼핑몰 프로젝트",
   "author": "JongHyun",
   "license": "UNLICENSED",
-  "engines": {
-    "node": "16.14.0"
-  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -32,6 +29,7 @@
     "@nestjs/passport": "^8.2.1",
     "@nestjs/platform-express": "^8.3.1",
     "@nestjs/serve-static": "^2.2.2",
+    "@nestjs/swagger": "^5.2.0",
     "@nestjs/typeorm": "^8.0.3",
     "@nestjsplus/config": "^1.0.14",
     "@sideway/address": "^4.1.3",

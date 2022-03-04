@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateGoodsDto } from './dto/create-goods.dto';
+import { UpdateGoodsDto } from './dto/update-goods.dto';
 import { Goods } from './entities/goods.entity';
 import { GoodsRepository } from './goods.repository';
 
@@ -35,19 +36,15 @@ export class GoodsService {
     return found;
   }
 
-  async updateGoods(id: number, newGoods: Goods): Promise<Goods> {
+  async updateGoods(
+    id: number,
+    updateGoodsDto: UpdateGoodsDto,
+  ): Promise<Goods> {
     const goods = await this.getGoodsById(id);
 
-    goods.category = newGoods.category;
-    goods.detail = newGoods.detail;
-    goods.discount = newGoods.discount;
-    goods.name = newGoods.name;
-    goods.price = newGoods.price;
-    // goods.sellnum = newGoods.sellnum;
-    // goods.stock = newGoods.stock;
-    goods.thumbnail = newGoods.thumbnail;
+    const updatedGoods = this.goodsRepository.create({ id, ...updateGoodsDto });
 
-    await this.goodsRepository.save(goods);
+    await this.goodsRepository.save(updatedGoods);
 
     return goods;
   }
