@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateGoodsDto } from './dto/create-goods.dto';
-import { UpdateGoodsDto } from './dto/update-goods.dto';
+import { UploadImageGoodsDTO } from './dto/uploadImage-goods.dto';
 import { Goods } from './entities/goods.entity';
 import { GoodsRepository } from './goods.repository';
 
@@ -38,7 +38,7 @@ export class GoodsService {
 
   async updateGoods(
     id: number,
-    updateGoodsDto: UpdateGoodsDto,
+    updateGoodsDto: UploadImageGoodsDTO,
   ): Promise<Goods> {
     const goods = await this.getGoodsById(id);
 

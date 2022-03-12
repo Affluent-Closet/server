@@ -1,5 +1,6 @@
 import {
   Controller,
+  Injectable,
   Post,
   UploadedFiles,
   UseInterceptors,
@@ -12,6 +13,7 @@ import 'dotenv/config';
 
 const s3 = new AWS.S3();
 
+@Injectable()
 @Controller('image')
 export class ImageController {
   constructor(private readonly imageService: ImageService) {}
