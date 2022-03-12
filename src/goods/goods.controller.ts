@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { CreateGoodsDto } from './dto/create-goods.dto';
 import { UpdateGoodsDto } from './dto/update-goods.dto';
-import { UploadImageGoodsDTO } from './dto/uploadImage-goods.dto';
 import { Goods } from './entities/goods.entity';
 import { GoodsService } from './goods.service';
 
@@ -44,7 +43,7 @@ export class GoodsController {
   @Post('/:id/update')
   updateGoods(
     @Param('id') id: number,
-    @Body() updateGoodsDto: UploadImageGoodsDTO,
+    @Body() updateGoodsDto: UpdateGoodsDto,
   ): Promise<Goods> {
     return this.goodsService.updateGoods(id, updateGoodsDto);
   }
