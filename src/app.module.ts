@@ -7,6 +7,7 @@ import { ImageModule } from './image/image.module';
 import { UserModule } from './user/user.module';
 import { EmailService } from './email/email.service';
 import { EmailModule } from './email/email.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { EmailModule } from './email/email.module';
     }),
     UserModule,
     EmailModule,
+    AuthModule,
   ],
   providers: [EmailService],
 })

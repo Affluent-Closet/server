@@ -3,22 +3,27 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
-  Delete,
   Query,
-  ParseIntPipe,
+  Headers,
+  UseGuards,
+  Delete,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { VerifyEmailDto } from './dto/verify-user.dto';
 import { UserLoginDto } from './dto/user-login.dto';
 import { User } from './entities/user.entity';
+import { AuthService } from 'src/auth/auth.service';
+import { AuthGuard } from 'src/auth/authGuard';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private authService: AuthService,
+  ) {}
 
   @Post()
   async createUser(@Body() createUserDto: CreateUserDto): Promise<void> {
@@ -37,8 +42,25 @@ export class UserController {
     return await this.userService.login(userLoginDto);
   }
 
+  @UseGuards(AuthGuard)
   @Get('/:id')
-  async getUserInfo(@Param('id') userId: string): Promise<User> {
-    return await this.userService.getUserInfo(userId);
+  getUserInfo(@Param('id') userId: string): Promise<User> {
+    //UserService를 통해 유저 정보를 가져와서 응답으로 돌려줍니다.
+    return this.userService.getUserInfo(userId);
+  }
+
+  @UseGuards(AuthGuard)
+  @Post('/:id/update')
+  updateUser(
+    @Param('id') userId: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<void> {
+    return this.userService.updateUser(userId, updateUserDto);
+  }
+
+  @UseGuards(AuthGuard)
+  @Delete('/:id')
+  deleteUser(@Param('id') userId: string) {
+    return this.userService.deleteUser(userId);
   }
 }
