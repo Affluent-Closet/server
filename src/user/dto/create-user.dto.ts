@@ -7,6 +7,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { Role } from '../entities/user.entity';
 
 export class CreateUserDto {
   //이름에 포함된 공백제거
@@ -35,4 +36,13 @@ export class CreateUserDto {
   //사용자 패스워드는 영문대소문자와 숫자 또는 특수문자(!, @, #, $, %, ^, &, *, (, ))로 이루어진 8자 이상 30자 이하의 문자열이어야 한다.
   @Matches(/^[A-Za-z\d!@#$%^&*()]{8,30}$/)
   password: string;
+
+  @IsString()
+  role: Role;
+
+  @IsString()
+  phoneNumber: string;
+
+  @IsString()
+  profileImg: string;
 }

@@ -5,11 +5,10 @@ import {
   Body,
   Param,
   Query,
-  Headers,
   UseGuards,
   Delete,
 } from '@nestjs/common';
-import { UserService } from './user.service';
+import { emailValidateData, UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { VerifyEmailDto } from './dto/verify-user.dto';
 import { UserLoginDto } from './dto/user-login.dto';
@@ -32,7 +31,9 @@ export class UserController {
 
   @Post('/email-verify')
   //이메일 인증시 URL에 포함되어 전달되는 쿼리 파라미터를 @Query 데코레이터와 함께 선언한 DTO로 받는다.
-  async verifyEmail(@Query() verifyEmaildto: VerifyEmailDto): Promise<string> {
+  async verifyEmail(
+    @Query() verifyEmaildto: VerifyEmailDto,
+  ): Promise<emailValidateData> {
     const { signupVerifyToken } = verifyEmaildto;
     return await this.userService.verifyEmail(signupVerifyToken);
   }

@@ -22,4 +22,7 @@ export class CreateGoodsDto {
 
   @IsNotEmpty()
   thumbnail: string;
+
+  @IsNotEmpty()
+  sellnum: number;
 }

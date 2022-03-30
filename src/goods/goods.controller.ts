@@ -6,8 +6,10 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Query,
 } from '@nestjs/common';
 import { CreateGoodsDto } from './dto/create-goods.dto';
+import { SearchGoodsDto } from './dto/search-goods.dto';
 import { UpdateGoodsDto } from './dto/update-goods.dto';
 import { Goods } from './entities/goods.entity';
 import { GoodsService } from './goods.service';
@@ -27,8 +29,8 @@ export class GoodsController {
   //(Get) localhost:3000/goods
   //모든 상품 정보 불러오기
   @Get('')
-  getAllGoods(): Promise<Goods[]> {
-    return this.goodsService.getAllGoods();
+  getAllGoods(@Query() page: SearchGoodsDto) {
+    return this.goodsService.getAllGoods(page);
   }
 
   //(Get) localhost:3000/goods/:id

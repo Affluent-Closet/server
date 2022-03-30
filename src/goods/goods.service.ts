@@ -1,6 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Page } from 'src/common/entities/page/page';
 import { CreateGoodsDto } from './dto/create-goods.dto';
+import { SearchGoodsDto } from './dto/search-goods.dto';
 import { UpdateGoodsDto } from './dto/update-goods.dto';
 import { Goods } from './entities/goods.entity';
 import { GoodsRepository } from './goods.repository';
@@ -18,9 +20,13 @@ export class GoodsService {
   }
 
   //모든 goods 가져오기
-  async getAllGoods(): Promise<Goods[]> {
-    const goods = this.goodsRepository.find();
-    return goods;
+  async getAllGoods(page: SearchGoodsDto) {
+    const total = await this.goodsRepository.count();
+    const goods = await this.goodsRepository.find({
+      take: page.getLimit(),
+      skip: page.getOffset(),
+    });
+    return new Page(total, page.pageSize, goods);
   }
 
   //특정 goods 가져오기

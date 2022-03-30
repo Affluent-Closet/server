@@ -10,10 +10,15 @@ import * as uuid from 'uuid';
 import { EmailService } from 'src/email/email.service';
 import { UserLoginDto } from './dto/user-login.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
+import { Role, User } from './entities/user.entity';
 import { UserRepository } from './user.repository';
 import { Connection } from 'typeorm';
 import { AuthService } from 'src/auth/auth.service';
+
+export interface emailValidateData {
+  user: User;
+  jwtString: string;
+}
 
 @Injectable()
 export class UserService {
@@ -25,7 +30,9 @@ export class UserService {
   ) {}
 
   async createUser(createUserDto: CreateUserDto) {
-    const { name, email, password } = createUserDto;
+    console.log(createUserDto);
+    const { name, email, password, role, phoneNumber, profileImg } =
+      createUserDto;
     const userExist = await this.checkUserExists(email);
     if (userExist) {
       throw new UnprocessableEntityException(
@@ -33,7 +40,15 @@ export class UserService {
       );
     }
     const signupVerifyToken = uuid.v1();
-    await this.saveUser(name, email, password, signupVerifyToken);
+    await this.saveUser(
+      name,
+      email,
+      password,
+      signupVerifyToken,
+      role,
+      phoneNumber,
+      profileImg,
+    );
     await this.sendMemberJoinEmail(email, signupVerifyToken);
   }
 
@@ -50,12 +65,18 @@ export class UserService {
     email: string,
     password: string,
     signupVerifyToken: string,
+    role: Role,
+    phoneNumber: string,
+    profileImg: string,
   ) {
     const user = new User();
     user.name = name;
     user.email = email;
     user.password = password;
     user.signupVerifyToken = signupVerifyToken;
+    user.role = role;
+    user.phoneNumber = phoneNumber;
+    user.profileImg = profileImg;
     await this.userRepository.save(user);
   }
 
@@ -75,7 +96,7 @@ export class UserService {
     return `This action returns a #${id} user`;
   }
 
-  async verifyEmail(signupVerifyToken: string): Promise<string> {
+  async verifyEmail(signupVerifyToken: string): Promise<emailValidateData> {
     // TODO
     // 1. DB에서 signupVerifyToken으로 회원 가입 처리중인 유저가 있는지 조회하고 없다면 에러 처리
     const user = await this.userRepository.findOne({ signupVerifyToken });
@@ -83,11 +104,16 @@ export class UserService {
       throw new NotFoundException('유저가 존재하지 않습니다.');
     }
     // 2. 바로 로그인 상태가 되도록 JWT를 발급
-    return this.authService.login({
+    const jwtString = this.authService.login({
       id: user.id,
       name: user.name,
       email: user.email,
     });
+
+    return {
+      user,
+      jwtString,
+    };
   }
 
   async login(userLoginDto: UserLoginDto): Promise<string> {
