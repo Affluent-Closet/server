@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Page } from 'src/common/entities/page/page';
 import { CreateGoodsDto } from './dto/create-goods.dto';
-import { SearchGoodsDto } from './dto/search-goods.dto';
+import { SearchGoodsDto, SortMethod } from './dto/search-goods.dto';
 import { UpdateGoodsDto } from './dto/update-goods.dto';
 import { Goods } from './entities/goods.entity';
 import { GoodsRepository } from './goods.repository';
@@ -21,17 +21,65 @@ export class GoodsService {
 
   //모든 goods 가져오기
   async getAllGoods(page: SearchGoodsDto) {
+    const { sortBy } = page;
     const total = await this.goodsRepository.count();
-    const goods = await this.goodsRepository.find({
-      take: page.getLimit(),
-      skip: page.getOffset(),
-    });
-    return new Page(total, page.pageSize, goods);
+    const query = await this.goodsRepository.createQueryBuilder('goods');
+    this.getPagination(query, page);
+    console.log(page);
+    if (!sortBy) {
+      //sortBy가 비어있으면 분류를 안함
+    } else {
+      switch (sortBy) {
+        case SortMethod.BEST:
+          this.getHighSalesOrderGoods(query);
+          break;
+        case SortMethod.LOWPRICE:
+          this.getLowPriceOrderGoods(query);
+          break;
+        case SortMethod.NEW:
+          this.getNewOrderGoods(query);
+          break;
+        default:
+          break;
+      }
+    }
+
+    const found = await query.getMany();
+    console.log(found);
+    // const goods = await this.goodsRepository.find({
+    //   take: page.getLimit(),
+    //   skip: page.getOffset(),
+    // });
+    return new Page(total, page.pageSize, found);
   }
 
-  //특정 goods 가져오기
+  //페이지네이션
+  getPagination(query, page) {
+    query.take(page.getLimit());
+    query.skip(page.getOffset());
+  }
+
+  //낮은 가격순으로 정렬
+  getLowPriceOrderGoods(query) {
+    query.orderBy('goods.price', 'ASC');
+  }
+
+  //판매량 많은순으로 정렬
+  getHighSalesOrderGoods(query) {
+    query.orderBy('goods.sellnum', 'DESC');
+  }
+
+  //신상품순
+  getNewOrderGoods(query) {
+    query.orderBy('goods.created_at', 'DESC');
+  }
+
+  //특정 id를 가진 goods 가져오기
   async getGoodsById(id: number): Promise<Goods> {
-    const found = this.goodsRepository.findOne(id);
+    // const found = this.goodsRepository.findOne(id);
+    const query = await this.goodsRepository.createQueryBuilder('goods');
+    query.where('goods.id = :id', { id: id });
+    const found = query.getOne();
 
     if (!found) {
       throw new NotFoundException(
