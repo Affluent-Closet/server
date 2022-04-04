@@ -2,6 +2,7 @@ import {
   Injectable,
   InternalServerErrorException,
   NotFoundException,
+  UnauthorizedException,
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -129,17 +130,26 @@ export class UserService {
   async login(userLoginDto: UserLoginDto): Promise<string> {
     // TODO
     const { email, password } = userLoginDto;
-    // 1. email, password를 가진 유저가 존재하는지 DB에서 확인하고 없다면 에러 처리
-    const user = await this.userRepository.findOne({ email, password });
-    // 2. JWT를 발급
+    /** 비밀번호 암호화에 필요한 salt변수 */
+    // 1. email을 가진 유저가 존재하는지 DB에서 확인하고 없다면 에러 처리
+    const user = await this.userRepository.findOne({ email });
     if (!user) {
-      throw new NotFoundException('유저가 존재하지 않습니다.');
+      throw new NotFoundException(
+        '유저가 존재하지 않습니다. 이메일을 다시한번 확인하세요',
+      );
     }
-    return this.authService.login({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-    });
+    // 2. 찾은 유저와 비밀번호가 같은지를 확인하고 JWT를 발급
+    if (user && (await bcrypt.compare(password, user.password))) {
+      return this.authService.login({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      });
+    } else {
+      throw new UnauthorizedException(
+        '로그인에 실패했습니다. 비밀번호를 다시한번 확인하세요',
+      );
+    }
   }
 
   async getUserInfo(userId: string): Promise<User> {
