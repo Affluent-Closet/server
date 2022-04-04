@@ -8,6 +8,8 @@ import { UserModule } from './user/user.module';
 import { EmailService } from './email/email.service';
 import { EmailModule } from './email/email.module';
 import { AuthModule } from './auth/auth.module';
+import { PurchaseController } from './purchase/purchase.controller';
+import { PurchaseModule } from './purchase/purchase.module';
 
 @Module({
   imports: [
@@ -20,7 +22,9 @@ import { AuthModule } from './auth/auth.module';
     UserModule,
     EmailModule,
     AuthModule,
+    PurchaseModule,
   ],
   providers: [EmailService],
+  controllers: [PurchaseController],
 })
 export class AppModule {}

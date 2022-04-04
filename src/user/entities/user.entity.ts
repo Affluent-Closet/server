@@ -1,7 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsEnum, IsString } from 'class-validator';
 import { Base } from 'src/common/entities/base.entity';
-import { Entity, Column, Unique, PrimaryGeneratedColumn } from 'typeorm';
+import { purchaseInfo } from 'src/purchase/entities/purchaseInfo.entity';
+import {
+  Entity,
+  Column,
+  Unique,
+  PrimaryGeneratedColumn,
+  OneToMany,
+} from 'typeorm';
 
 export enum Role {
   ADMIN = 'ADMIN',
@@ -26,7 +33,7 @@ export class User extends Base {
   @IsEmail()
   email: string;
 
-  @Column({ length: 30 })
+  @Column()
   @ApiProperty({ type: String, description: '사용자 암호' })
   password: string;
 
@@ -44,4 +51,9 @@ export class User extends Base {
 
   @Column()
   profileImg: string;
+
+  @OneToMany((type) => purchaseInfo, (purchaseInfo) => purchaseInfo.user, {
+    eager: true,
+  })
+  purchaseInfoList: purchaseInfo[];
 }

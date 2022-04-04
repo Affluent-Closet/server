@@ -14,6 +14,7 @@ import { Role, User } from './entities/user.entity';
 import { UserRepository } from './user.repository';
 import { Connection } from 'typeorm';
 import { AuthService } from 'src/auth/auth.service';
+import * as bcrypt from 'bcryptjs';
 
 export interface emailValidateData {
   user: User;
@@ -30,7 +31,6 @@ export class UserService {
   ) {}
 
   async createUser(createUserDto: CreateUserDto) {
-    console.log(createUserDto);
     const { name, email, password, role, phoneNumber, profileImg } =
       createUserDto;
     const userExist = await this.checkUserExists(email);
@@ -39,17 +39,27 @@ export class UserService {
         '다른 유저와 중복된 이메일입니다.',
       );
     }
+    /** 비밀번호 암호화에 필요한 salt변수 */
+    const salt = await bcrypt.genSalt();
+    /** 암호화된 비밀번호 */
+    const hashedPassword = await bcrypt.hash(password, salt);
+    /** jwt 토큰에 들어갈 서명부분 */
     const signupVerifyToken = uuid.v1();
-    await this.saveUser(
-      name,
-      email,
-      password,
-      signupVerifyToken,
-      role,
-      phoneNumber,
-      profileImg,
-    );
-    await this.sendMemberJoinEmail(email, signupVerifyToken);
+    try {
+      await this.saveUser(
+        name,
+        email,
+        hashedPassword,
+        signupVerifyToken,
+        role,
+        phoneNumber,
+        profileImg,
+      );
+      await this.sendMemberJoinEmail(email, signupVerifyToken);
+    } catch (e) {
+      console.log(e);
+      throw new InternalServerErrorException();
+    }
   }
 
   //기존에 있던 유저인지 먼저 확인

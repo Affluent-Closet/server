@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Page } from 'src/common/entities/page/page';
+import { Page } from 'src/common/page/page';
 import { CreateGoodsDto } from './dto/create-goods.dto';
 import { SearchGoodsDto, SortMethod } from './dto/search-goods.dto';
 import { UpdateGoodsDto } from './dto/update-goods.dto';
