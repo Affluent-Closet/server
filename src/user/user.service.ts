@@ -127,7 +127,7 @@ export class UserService {
     };
   }
 
-  async login(userLoginDto: UserLoginDto): Promise<string> {
+  async login(userLoginDto: UserLoginDto): Promise<emailValidateData> {
     // TODO
     const { email, password } = userLoginDto;
     /** 비밀번호 암호화에 필요한 salt변수 */
@@ -140,11 +140,16 @@ export class UserService {
     }
     // 2. 찾은 유저와 비밀번호가 같은지를 확인하고 JWT를 발급
     if (user && (await bcrypt.compare(password, user.password))) {
-      return this.authService.login({
+      const jwtString = this.authService.login({
         id: user.id,
         name: user.name,
         email: user.email,
       });
+
+      return {
+        user,
+        jwtString,
+      };
     } else {
       throw new UnauthorizedException(
         '로그인에 실패했습니다. 비밀번호를 다시한번 확인하세요',

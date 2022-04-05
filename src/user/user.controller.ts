@@ -39,7 +39,7 @@ export class UserController {
   }
 
   @Post('/login')
-  async login(@Body() userLoginDto: UserLoginDto): Promise<string> {
+  async login(@Body() userLoginDto: UserLoginDto): Promise<emailValidateData> {
     return await this.userService.login(userLoginDto);
   }
 

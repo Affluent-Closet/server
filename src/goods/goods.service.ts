@@ -46,14 +46,14 @@ export class GoodsService {
 
     const found = await query.getMany();
     console.log(found);
-    // const goods = await this.goodsRepository.find({
-    //   take: page.getLimit(),
-    //   skip: page.getOffset(),
-    // });
     return new Page(total, page.pageSize, found);
   }
 
   //페이지네이션
+  // const goods = await this.goodsRepository.find({
+  //   take: page.getLimit(),
+  //   skip: page.getOffset(),
+  // });
   getPagination(query, page) {
     query.take(page.getLimit());
     query.skip(page.getOffset());

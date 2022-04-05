@@ -32,7 +32,7 @@ export class EmailService {
 
     const mailOptions: EmailOptions = {
       to: emailAddress,
-      subject: '가입 인증 메일',
+      subject: 'Affluent-Closet : 가입 인증 메일',
       html: `
         가입확인 버튼를 누르시면 가입 인증이 완료됩니다.<br/>
         <form action="${url}" method="POST">
