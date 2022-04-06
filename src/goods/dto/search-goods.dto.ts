@@ -49,4 +49,8 @@ export class SearchGoodsDto extends PageRequest {
   @IsOptional()
   @ApiProperty()
   sortBy?: SortMethod;
+
+  @IsOptional()
+  @ApiProperty({ type: Number, description: '한 페이지당 상품 갯수' })
+  pageSize?: number;
 }

@@ -3,9 +3,9 @@ import { Base } from 'src/common/entities/base.entity';
 import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
 export enum Category {
-  PANTS = 'pants',
-  SHIRTS = 'shirts',
-  SHOES = 'shoes',
+  PANTS = 'PANTS',
+  SHIRTS = 'SHIRTS',
+  SHOES = 'SHOES',
 }
 
 @Entity()

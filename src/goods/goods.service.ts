@@ -21,11 +21,21 @@ export class GoodsService {
 
   //모든 goods 가져오기
   async getAllGoods(page: SearchGoodsDto) {
-    const { sortBy } = page;
-    const total = await this.goodsRepository.count();
+    //쿼리로 category가 들어있으면 카테고리에 맞는것들만 가져와야함
+    const { sortBy, category } = page;
+    let total;
+    let found;
     const query = await this.goodsRepository.createQueryBuilder('goods');
-    this.getPagination(query, page);
-    console.log(page);
+    if (!category) {
+      //category가 비어있을때
+      total = await this.goodsRepository.count();
+      this.getPagination(query, page);
+    } else {
+      //category가 들어있을 때
+      /**카테고리에 알맞은 데이터 전체 갯수 세기 */
+      total = await this.goodsRepository.count({ category });
+      found = await this.getPaginationByCategory(page, category);
+    }
     if (!sortBy) {
       //sortBy가 비어있으면 분류를 안함
     } else {
@@ -44,16 +54,22 @@ export class GoodsService {
       }
     }
 
-    const found = await query.getMany();
-    console.log(found);
+    if (!category) {
+      found = await query.getMany();
+    }
     return new Page(total, page.pageSize, found);
   }
 
-  //페이지네이션
-  // const goods = await this.goodsRepository.find({
-  //   take: page.getLimit(),
-  //   skip: page.getOffset(),
-  // });
+  /**카테고리에 따른 페이지네이션*/
+  async getPaginationByCategory(page, category) {
+    const goods = await this.goodsRepository.find({
+      where: { category },
+      take: page.getLimit(),
+      skip: page.getOffset(),
+    });
+    return goods;
+  }
+  /**카테고리 없이 페이지네이션 */
   getPagination(query, page) {
     query.take(page.getLimit());
     query.skip(page.getOffset());
