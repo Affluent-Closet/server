@@ -21,7 +21,7 @@ export class GoodsService {
   }
 
   //모든 goods 가져오기
-  async getAllGoods(page: SearchGoodsDto) {
+  async searchGoods(page: SearchGoodsDto) {
     //쿼리로 category가 들어있으면 카테고리에 맞는것들만 가져와야함
     const { sortBy, category, name } = page;
     console.log(page);

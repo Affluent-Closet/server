@@ -29,8 +29,8 @@ export class GoodsController {
   //(Get) localhost:3000/goods
   //모든 상품 정보 불러오기
   @Get('')
-  getAllGoods(@Query() page: SearchGoodsDto) {
-    return this.goodsService.getAllGoods(page);
+  searchGoods(@Query() page: SearchGoodsDto) {
+    return this.goodsService.searchGoods(page);
   }
 
   //(Get) localhost:3000/goods/:id
