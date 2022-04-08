@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Page } from 'src/common/page/page';
+import { Like } from 'typeorm';
 import { CreateGoodsDto } from './dto/create-goods.dto';
 import { SearchGoodsDto, SortMethod } from './dto/search-goods.dto';
 import { UpdateGoodsDto } from './dto/update-goods.dto';
@@ -22,72 +23,61 @@ export class GoodsService {
   //모든 goods 가져오기
   async getAllGoods(page: SearchGoodsDto) {
     //쿼리로 category가 들어있으면 카테고리에 맞는것들만 가져와야함
-    const { sortBy, category } = page;
-    let total;
-    let found;
-    const query = await this.goodsRepository.createQueryBuilder('goods');
-    if (!category) {
-      //category가 비어있을때
-      total = await this.goodsRepository.count();
-      this.getPagination(query, page);
-    } else {
-      //category가 들어있을 때
-      /**카테고리에 알맞은 데이터 전체 갯수 세기 */
-      total = await this.goodsRepository.count({ category });
-      found = await this.getPaginationByCategory(page, category);
-    }
+    const { sortBy, category, name } = page;
+    console.log(page);
+    /**total : 물품갯수 카운트, sortObj : 분류기준 , found : 찾은 물풀들 */
+    let total, sortObj, found;
     if (!sortBy) {
       //sortBy가 비어있으면 분류를 안함
     } else {
       switch (sortBy) {
         case SortMethod.BEST:
-          this.getHighSalesOrderGoods(query);
+          sortObj = { sellnum: 'DESC' };
           break;
         case SortMethod.LOWPRICE:
-          this.getLowPriceOrderGoods(query);
+          sortObj = { price: 'ASC' };
           break;
         case SortMethod.NEW:
-          this.getNewOrderGoods(query);
-          break;
-        default:
+          sortObj = { createdAt: 'DESC' };
           break;
       }
     }
 
     if (!category) {
-      found = await query.getMany();
+      //category가 비어있을때
+      total = await this.goodsRepository.count();
+      found = await this.getPagination(page, sortObj, name);
+    } else {
+      //category가 들어있을 때
+      /**카테고리에 알맞은 데이터 전체 갯수 세기 */
+      total = await this.goodsRepository.count({ category });
+      found = await this.getPaginationByCategory(page, category, sortObj, name);
     }
     return new Page(total, page.pageSize, found);
   }
 
   /**카테고리에 따른 페이지네이션*/
-  async getPaginationByCategory(page, category) {
+  async getPaginationByCategory(page, category, sortObj, name) {
+    console.log(category);
+    console.log(sortObj);
     const goods = await this.goodsRepository.find({
-      where: { category },
+      where: { category, name: Like(`%${name}%`) },
       take: page.getLimit(),
       skip: page.getOffset(),
+      order: sortObj,
     });
     return goods;
   }
   /**카테고리 없이 페이지네이션 */
-  getPagination(query, page) {
-    query.take(page.getLimit());
-    query.skip(page.getOffset());
-  }
-
-  //낮은 가격순으로 정렬
-  getLowPriceOrderGoods(query) {
-    query.orderBy('goods.price', 'ASC');
-  }
-
-  //판매량 많은순으로 정렬
-  getHighSalesOrderGoods(query) {
-    query.orderBy('goods.sellnum', 'DESC');
-  }
-
-  //신상품순
-  getNewOrderGoods(query) {
-    query.orderBy('goods.created_at', 'DESC');
+  async getPagination(page, sortObj, name) {
+    console.log(sortObj);
+    const goods = await this.goodsRepository.find({
+      where: { name: Like(`%${name}%`) },
+      take: page.getLimit(),
+      skip: page.getOffset(),
+      order: sortObj,
+    });
+    return goods;
   }
 
   //특정 id를 가진 goods 가져오기
