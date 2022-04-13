@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsEnum, IsString } from 'class-validator';
 import { Base } from 'src/common/entities/base.entity';
 import { purchaseInfo } from 'src/purchase/entities/purchaseInfo.entity';
+import { Review } from 'src/review/dto/entities/review.entity';
 import {
   Entity,
   Column,
@@ -52,8 +53,13 @@ export class User extends Base {
   @Column()
   profileImg: string;
 
+  /**유저가 구입한 구매정보 id */
   @OneToMany((type) => purchaseInfo, (purchaseInfo) => purchaseInfo.user, {
     eager: true,
   })
   purchaseInfoList: purchaseInfo[];
+
+  /**유저가 작성한 리뷰 id */
+  @OneToMany((type) => Review, (review) => review.user, { eager: true })
+  review: Review[];
 }

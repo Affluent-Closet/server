@@ -16,6 +16,7 @@ import { User } from './entities/user.entity';
 import { AuthService } from 'src/auth/auth.service';
 import { AuthGuard } from 'src/auth/authGuard';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Auth } from 'src/auth/decorators/auth.decorators';
 
 @Controller('user')
 export class UserController {
@@ -43,9 +44,11 @@ export class UserController {
     return await this.userService.login(userLoginDto);
   }
 
-  @UseGuards(AuthGuard)
+  @Auth(['ANY'])
+  // @UseGuards(AuthGuard)
   @Get('/:id')
   getUserInfo(@Param('id') userId: string): Promise<User> {
+    console.log(userId);
     //UserService를 통해 유저 정보를 가져와서 응답으로 돌려줍니다.
     return this.userService.getUserInfo(userId);
   }

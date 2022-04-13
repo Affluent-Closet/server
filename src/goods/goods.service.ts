@@ -20,7 +20,6 @@ export class GoodsService {
     return this.goodsRepository.createGoods(createGoodsDto);
   }
 
-  //모든 goods 가져오기
   async searchGoods(page: SearchGoodsDto) {
     //쿼리로 category가 들어있으면 카테고리에 맞는것들만 가져와야함
     const { sortBy, category, name } = page;
@@ -42,7 +41,6 @@ export class GoodsService {
           break;
       }
     }
-
     if (!category) {
       //category가 비어있을때
       total = await this.goodsRepository.count();
@@ -53,13 +51,14 @@ export class GoodsService {
       total = await this.goodsRepository.count({ category });
       found = await this.getPaginationByCategory(page, category, sortObj, name);
     }
+    console.log(found);
     return new Page(total, page.pageSize, found);
   }
 
   /**카테고리에 따른 페이지네이션*/
   async getPaginationByCategory(page, category, sortObj, name) {
-    console.log(category);
-    console.log(sortObj);
+    // console.log(category);
+    // console.log(sortObj);
     const goods = await this.goodsRepository.find({
       where: { category, name: Like(`%${name}%`) },
       take: page.getLimit(),
