@@ -3,9 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Page } from 'src/common/page/page';
 import { Like } from 'typeorm';
 import { CreateGoodsDto } from './dto/create-goods.dto';
+import { CreateSizeDto } from './dto/create-size.dto';
 import { SearchGoodsDto, SortMethod } from './dto/search-goods.dto';
 import { UpdateGoodsDto } from './dto/update-goods.dto';
 import { Goods } from './entities/goods.entity';
+import { GoodsSizeRepository } from './goods-size.repository';
 import { GoodsRepository } from './goods.repository';
 
 @Injectable()
@@ -13,11 +15,17 @@ export class GoodsService {
   constructor(
     @InjectRepository(GoodsRepository)
     private goodsRepository: GoodsRepository,
+    private goodsSizeRepository: GoodsSizeRepository,
   ) {}
 
   //goods 생성
   createGoods(createGoodsDto: CreateGoodsDto): Promise<Goods> {
     return this.goodsRepository.createGoods(createGoodsDto);
+  }
+
+  /**상품 사이즈 생성 */
+  createGoodsSize(createSizeDto: CreateSizeDto, id: number) {
+    return this.goodsSizeRepository.createGoodsSize(createSizeDto, id);
   }
 
   async searchGoods(page: SearchGoodsDto) {

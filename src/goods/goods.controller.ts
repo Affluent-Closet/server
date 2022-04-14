@@ -9,6 +9,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { CreateGoodsDto } from './dto/create-goods.dto';
+import { CreateSizeDto } from './dto/create-size.dto';
 import { SearchGoodsDto } from './dto/search-goods.dto';
 import { UpdateGoodsDto } from './dto/update-goods.dto';
 import { Goods } from './entities/goods.entity';
@@ -24,6 +25,15 @@ export class GoodsController {
   @Post('')
   createGoods(@Body() createGoodsDto: CreateGoodsDto): Promise<Goods> {
     return this.goodsService.createGoods(createGoodsDto);
+  }
+
+  /**상품 사이즈 생성 */
+  @Post('/:id/size')
+  createGoodsSize(
+    @Body() createSizeDto: CreateSizeDto,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
+    return this.goodsService.createGoodsSize(createSizeDto, id);
   }
 
   //(Get) localhost:3000/goods
