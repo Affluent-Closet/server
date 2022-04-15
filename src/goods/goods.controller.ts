@@ -28,6 +28,7 @@ export class GoodsController {
   }
 
   /**상품 사이즈 생성 */
+  // 상품 정보를 id로 받아와서 size안에 넣어주는게 필요함
   @Post('/:id/size')
   createGoodsSize(
     @Body() createSizeDto: CreateSizeDto,

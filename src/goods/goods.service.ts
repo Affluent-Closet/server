@@ -24,8 +24,9 @@ export class GoodsService {
   }
 
   /**상품 사이즈 생성 */
-  createGoodsSize(createSizeDto: CreateSizeDto, id: number) {
-    return this.goodsSizeRepository.createGoodsSize(createSizeDto, id);
+  async createGoodsSize(createSizeDto: CreateSizeDto, id: number) {
+    const goods = await this.getGoodsById(id);
+    return this.goodsSizeRepository.createGoodsSize(createSizeDto, goods);
   }
 
   async searchGoods(page: SearchGoodsDto) {
