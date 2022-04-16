@@ -1,4 +1,4 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CreateSizeDto {
   @IsNotEmpty()
@@ -6,4 +6,8 @@ export class CreateSizeDto {
 
   @IsNotEmpty()
   size: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  goodsId: number;
 }

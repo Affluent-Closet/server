@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsEnum, IsString } from 'class-validator';
 import { Base } from 'src/common/entities/base.entity';
 import { purchaseInfo } from 'src/purchase/entities/purchaseInfo.entity';
-import { Review } from 'src/review/dto/entities/review.entity';
+import { Review } from 'src/review/entities/review.entity';
 import {
   Entity,
   Column,

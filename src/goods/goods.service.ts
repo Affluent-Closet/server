@@ -15,6 +15,7 @@ export class GoodsService {
   constructor(
     @InjectRepository(GoodsRepository)
     private goodsRepository: GoodsRepository,
+    @InjectRepository(GoodsSizeRepository)
     private goodsSizeRepository: GoodsSizeRepository,
   ) {}
 
@@ -24,8 +25,9 @@ export class GoodsService {
   }
 
   /**상품 사이즈 생성 */
-  async createGoodsSize(createSizeDto: CreateSizeDto, id: number) {
-    const goods = await this.getGoodsById(id);
+  async createGoodsSize(createSizeDto: CreateSizeDto) {
+    const { goodsId } = createSizeDto;
+    const goods = await this.getGoodsById(goodsId);
     return this.goodsSizeRepository.createGoodsSize(createSizeDto, goods);
   }
 

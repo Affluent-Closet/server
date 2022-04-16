@@ -6,7 +6,6 @@ import { Goods } from './entities/goods.entity';
 @EntityRepository(Size)
 export class GoodsSizeRepository extends Repository<Size> {
   async createGoodsSize(createSizeDto: CreateSizeDto, goods: Goods) {
-    console.log({ ...createSizeDto, goods });
     const size = this.create({ ...createSizeDto, goods });
     await this.save(size);
     return size;

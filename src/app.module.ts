@@ -10,6 +10,7 @@ import { EmailModule } from './email/email.module';
 import { AuthModule } from './auth/auth.module';
 import { PurchaseController } from './purchase/purchase.controller';
 import { PurchaseModule } from './purchase/purchase.module';
+import { ReviewModule } from './review/review.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { PurchaseModule } from './purchase/purchase.module';
     EmailModule,
     AuthModule,
     PurchaseModule,
+    ReviewModule,
   ],
   providers: [EmailService],
   controllers: [PurchaseController],

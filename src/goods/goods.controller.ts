@@ -29,12 +29,9 @@ export class GoodsController {
 
   /**상품 사이즈 생성 */
   // 상품 정보를 id로 받아와서 size안에 넣어주는게 필요함
-  @Post('/:id/size')
-  createGoodsSize(
-    @Body() createSizeDto: CreateSizeDto,
-    @Param('id', ParseIntPipe) id: number,
-  ) {
-    return this.goodsService.createGoodsSize(createSizeDto, id);
+  @Post('/size')
+  createGoodsSize(@Body() createSizeDto: CreateSizeDto) {
+    return this.goodsService.createGoodsSize(createSizeDto);
   }
 
   //(Get) localhost:3000/goods

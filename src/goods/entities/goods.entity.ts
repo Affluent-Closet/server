@@ -1,6 +1,6 @@
 import { IsArray } from 'class-validator';
 import { Base } from 'src/common/entities/base.entity';
-import { Review } from 'src/review/dto/entities/review.entity';
+import { Review } from 'src/review/entities/review.entity';
 import {
   Column,
   Entity,
