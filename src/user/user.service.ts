@@ -27,7 +27,8 @@ export class UserService {
   constructor(
     private emailService: EmailService,
     private authService: AuthService,
-    @InjectRepository(User) private userRepository: UserRepository,
+    @InjectRepository(UserRepository)
+    private userRepository: UserRepository,
     private connection: Connection,
   ) {}
 
@@ -159,6 +160,7 @@ export class UserService {
 
   async getUserInfo(userId: string): Promise<User> {
     // 1. userId를 가진 유저가 존재하는지 DB에서 확인하고 없다면 에러 처리
+    console.log(this.userRepository);
 
     const user = await this.userRepository.findOne({ id: userId });
 

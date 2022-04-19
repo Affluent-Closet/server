@@ -27,6 +27,5 @@ import { ReviewModule } from './review/review.module';
     ReviewModule,
   ],
   providers: [EmailService],
-  controllers: [PurchaseController],
 })
 export class AppModule {}
