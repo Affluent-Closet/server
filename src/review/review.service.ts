@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GoodsService } from 'src/goods/goods.service';
 import { UserService } from 'src/user/user.service';
@@ -20,5 +20,9 @@ export class ReviewService {
     const goods = await this.goodsService.getGoodsById(goodsId);
     console.log(goods);
     return this.reviewRepository.createReview(createReviewDto, goods, user);
+  }
+
+  async getReviewsByGoods() {
+    return 'hello';
   }
 }
