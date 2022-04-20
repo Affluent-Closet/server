@@ -8,6 +8,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { CreateReviewDto } from './dto/create-review.dto';
+import { GetReivewsByGoodsDto } from './dto/get-reviews-byGoods.dto';
 import { ReviewService } from './review.service';
 
 @Controller('review')
@@ -20,7 +21,7 @@ export class ReviewController {
   }
 
   @Get('/goods')
-  async getReviewsByGoods() {
-    return this.reviewService.getReviewsByGoods();
+  async getReviewsByGoods(@Query() page: GetReivewsByGoodsDto) {
+    return this.reviewService.getReviewsByGoods(page);
   }
 }

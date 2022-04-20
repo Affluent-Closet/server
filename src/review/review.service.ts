@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { GoodsService } from 'src/goods/goods.service';
 import { UserService } from 'src/user/user.service';
 import { CreateReviewDto } from './dto/create-review.dto';
+import { GetReivewsByGoodsDto } from './dto/get-reviews-byGoods.dto';
 import { ReviewRepository } from './review.repository';
 
 @Injectable()
@@ -22,7 +23,13 @@ export class ReviewService {
     return this.reviewRepository.createReview(createReviewDto, goods, user);
   }
 
-  async getReviewsByGoods() {
-    return 'hello';
+  async getReviewsByGoods(page: GetReivewsByGoodsDto) {
+    const { goodsId } = page;
+    const reviews = this.reviewRepository.find({
+      where: { goods: goodsId },
+      take: page.getLimit(),
+      skip: page.getOffset(),
+    });
+    return reviews;
   }
 }
