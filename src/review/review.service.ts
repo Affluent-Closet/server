@@ -4,6 +4,7 @@ import { GoodsService } from 'src/goods/goods.service';
 import { UserService } from 'src/user/user.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { GetReivewsByGoodsDto } from './dto/get-reviews-byGoods.dto';
+import { GetReviewsByUser } from './dto/get-reviews-byUser';
 import { ReviewRepository } from './review.repository';
 
 @Injectable()
@@ -27,6 +28,16 @@ export class ReviewService {
     const { goodsId } = page;
     const reviews = this.reviewRepository.find({
       where: { goods: goodsId },
+      take: page.getLimit(),
+      skip: page.getOffset(),
+    });
+    return reviews;
+  }
+
+  async getReviewsByUser(page: GetReviewsByUser) {
+    const { userId } = page;
+    const reviews = this.reviewRepository.find({
+      where: { user: userId },
       take: page.getLimit(),
       skip: page.getOffset(),
     });

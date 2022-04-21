@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { GetReivewsByGoodsDto } from './dto/get-reviews-byGoods.dto';
+import { GetReviewsByUser } from './dto/get-reviews-byUser';
 import { ReviewService } from './review.service';
 
 @Controller('review')
@@ -23,5 +24,10 @@ export class ReviewController {
   @Get('/goods')
   async getReviewsByGoods(@Query() page: GetReivewsByGoodsDto) {
     return this.reviewService.getReviewsByGoods(page);
+  }
+
+  @Get('/user')
+  async getReviewsByUser(@Query() page: GetReviewsByUser) {
+    return this.reviewService.getReviewsByUser(page);
   }
 }
