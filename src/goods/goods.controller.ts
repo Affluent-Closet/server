@@ -6,8 +6,11 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Query,
 } from '@nestjs/common';
 import { CreateGoodsDto } from './dto/create-goods.dto';
+import { CreateSizeDto } from './dto/create-size.dto';
+import { SearchGoodsDto } from './dto/search-goods.dto';
 import { UpdateGoodsDto } from './dto/update-goods.dto';
 import { Goods } from './entities/goods.entity';
 import { GoodsService } from './goods.service';
@@ -24,11 +27,18 @@ export class GoodsController {
     return this.goodsService.createGoods(createGoodsDto);
   }
 
+  /**상품 사이즈 생성 */
+  // 상품 정보를 id로 받아와서 size안에 넣어주는게 필요함
+  @Post('/size')
+  createGoodsSize(@Body() createSizeDto: CreateSizeDto) {
+    return this.goodsService.createGoodsSize(createSizeDto);
+  }
+
   //(Get) localhost:3000/goods
   //모든 상품 정보 불러오기
   @Get('')
-  getAllGoods(): Promise<Goods[]> {
-    return this.goodsService.getAllGoods();
+  searchGoods(@Query() page: SearchGoodsDto) {
+    return this.goodsService.searchGoods(page);
   }
 
   //(Get) localhost:3000/goods/:id

@@ -4,6 +4,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeORMconfig } from './configs/typeorm.config';
 import { GoodsModule } from './goods/goods.module';
 import { ImageModule } from './image/image.module';
+import { UserModule } from './user/user.module';
+import { EmailService } from './email/email.service';
+import { EmailModule } from './email/email.module';
+import { AuthModule } from './auth/auth.module';
+import { PurchaseController } from './purchase/purchase.controller';
+import { PurchaseModule } from './purchase/purchase.module';
+import { ReviewModule } from './review/review.module';
 
 @Module({
   imports: [
@@ -13,6 +20,12 @@ import { ImageModule } from './image/image.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    UserModule,
+    EmailModule,
+    AuthModule,
+    PurchaseModule,
+    ReviewModule,
   ],
+  providers: [EmailService],
 })
 export class AppModule {}

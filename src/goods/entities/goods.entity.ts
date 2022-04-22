@@ -1,11 +1,21 @@
 import { IsArray } from 'class-validator';
 import { Base } from 'src/common/entities/base.entity';
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { Review } from 'src/review/entities/review.entity';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  Unique,
+} from 'typeorm';
+import { Size } from './goods-size.entity';
 
 export enum Category {
-  PANTS = 'pants',
-  SHIRTS = 'shirts',
-  SHOES = 'shoes',
+  OUTER = 'OUTER',
+  SHIRTS = 'SHIRTS',
+  SHOES = 'SHOES',
+  KNIT = 'KNIT',
+  PANTS = 'PANTS',
 }
 
 @Entity()
@@ -32,8 +42,8 @@ export class Goods extends Base {
   discount: number;
 
   // 상품 재고
-  @Column()
-  stock: number;
+  // @Column()
+  // stock: number;
 
   // 상품 상세정보
   @Column('text', { array: true })
@@ -47,4 +57,16 @@ export class Goods extends Base {
   // 상품 판매수
   @Column()
   sellnum: number;
+
+  /**사이즈 */
+  @OneToMany((type) => Size, (size) => size.goods, {
+    eager: true,
+  })
+  size: Size[];
+
+  /**상품 리뷰 */
+  @OneToMany((type) => Review, (review) => review.goods, {
+    eager: true,
+  })
+  review: Review[];
 }
