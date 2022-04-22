@@ -110,13 +110,11 @@ export class GoodsService {
     id: number,
     updateGoodsDto: UpdateGoodsDto,
   ): Promise<Goods> {
-    const goods = await this.getGoodsById(id);
-
     const updatedGoods = this.goodsRepository.create({ id, ...updateGoodsDto });
 
     await this.goodsRepository.save(updatedGoods);
 
-    return goods;
+    return updatedGoods;
   }
 
   async deleteGoods(id: number): Promise<void> {

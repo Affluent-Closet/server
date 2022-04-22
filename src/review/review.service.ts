@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GoodsService } from 'src/goods/goods.service';
 import { UserService } from 'src/user/user.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { GetReivewsByGoodsDto } from './dto/get-reviews-byGoods.dto';
-import { GetReviewsByUser } from './dto/get-reviews-byUser';
+import { GetReviewsByUser } from './dto/get-reviews-byUser.dto';
+import { UpdateReviewDto } from './dto/update-review.dto';
 import { ReviewRepository } from './review.repository';
 
 @Injectable()
@@ -42,5 +43,43 @@ export class ReviewService {
       skip: page.getOffset(),
     });
     return reviews;
+  }
+
+  //특정 id를 가진 review 가져오기
+  async getReviewById(id: number) {
+    // const found = await this.goodsRepository.findOne(id);
+    const query = await this.reviewRepository.createQueryBuilder('goods');
+    query.where('goods.id = :id', { id: id });
+    const found = query.getOne();
+
+    if (!found) {
+      throw new NotFoundException(
+        `${id}로 요청한 리뷰를 찾을 수 없습니다. 아이디를 다시 한번 확인해 주세요.`,
+      );
+    }
+
+    return found;
+  }
+
+  async updateReview(reviewId: number, updateReviewDto: UpdateReviewDto) {
+    const updatedReview = this.reviewRepository.create({
+      id: reviewId,
+      ...updateReviewDto,
+    });
+
+    await this.reviewRepository.save(updatedReview);
+
+    return updatedReview;
+  }
+
+  async deleteReview(id: number) {
+    const result = await this.reviewRepository.delete({ id });
+
+    //id로 찾은 데이터가 디비에 없을 때
+    if (result.affected === 0) {
+      throw new NotFoundException(
+        `${id}로 찾은 review가 DB에 없습니다. id를 다시 한번 확인해 주세요.`,
+      );
+    }
   }
 }
