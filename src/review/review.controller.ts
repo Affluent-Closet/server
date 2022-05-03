@@ -8,6 +8,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+import { Auth } from 'src/auth/decorators/auth.decorators';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { GetReivewsByGoodsDto } from './dto/get-reviews-byGoods.dto';
 import { GetReviewsByUser } from './dto/get-reviews-byUser.dto';
@@ -19,6 +20,7 @@ export class ReviewController {
   constructor(private reviewService: ReviewService) {}
 
   @Post('')
+  @Auth(['ANY'])
   async createReview(@Body() createReviewDto: CreateReviewDto) {
     await this.reviewService.createReview(createReviewDto);
   }
