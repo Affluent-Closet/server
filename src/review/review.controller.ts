@@ -20,7 +20,7 @@ export class ReviewController {
   constructor(private reviewService: ReviewService) {}
 
   @Post('')
-  @Auth(['ANY'])
+  // @Auth(['ANY'])
   async createReview(@Body() createReviewDto: CreateReviewDto) {
     await this.reviewService.createReview(createReviewDto);
   }
