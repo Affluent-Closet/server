@@ -9,7 +9,7 @@ import { Goods } from './goods.entity';
 
 @Entity()
 @Unique(['id'])
-export class Size {
+export class SizeInfo {
   /**사이즈 id */
   @PrimaryGeneratedColumn()
   id: number;
@@ -23,6 +23,6 @@ export class Size {
   size: string;
 
   /**상품 정보 */
-  @ManyToOne((type) => Goods, (goods) => goods.size, { eager: false })
+  @ManyToOne((type) => Goods, (goods) => goods.sizeInfo, { eager: false })
   goods: Goods;
 }

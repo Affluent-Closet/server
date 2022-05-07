@@ -1,10 +1,10 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateSizeDto } from './dto/create-size.dto';
-import { Size } from './entities/goods-size.entity';
+import { SizeInfo } from './entities/goods-size.entity';
 import { Goods } from './entities/goods.entity';
 
-@EntityRepository(Size)
-export class GoodsSizeRepository extends Repository<Size> {
+@EntityRepository(SizeInfo)
+export class GoodsSizeRepository extends Repository<SizeInfo> {
   async createGoodsSize(createSizeDto: CreateSizeDto, goods: Goods) {
     const size = this.create({ ...createSizeDto, goods });
     await this.save(size);

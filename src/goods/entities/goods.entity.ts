@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
-import { Size } from './goods-size.entity';
+import { SizeInfo } from './goods-size.entity';
 
 export enum Category {
   OUTER = 'OUTER',
@@ -59,10 +59,10 @@ export class Goods extends Base {
   sellnum: number;
 
   /**사이즈 */
-  @OneToMany((type) => Size, (size) => size.goods, {
+  @OneToMany((type) => SizeInfo, (size) => size.goods, {
     eager: true,
   })
-  size: Size[];
+  sizeInfo: SizeInfo[];
 
   /**상품 리뷰 */
   @OneToMany((type) => Review, (review) => review.goods, {
