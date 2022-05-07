@@ -70,12 +70,24 @@ export class GoodsService {
   async getPaginationByCategory(page, category, sortObj, name) {
     // console.log(category);
     // console.log(sortObj);
-    const goods = await this.goodsRepository.find({
-      where: { category, name: Like(`%${name}%`) },
-      take: page.getLimit(),
-      skip: page.getOffset(),
-      order: sortObj,
-    });
+    let goods;
+    /**검색조건으로 이름이 없으면 그냥 찾기 */
+    if (!name) {
+      goods = await this.goodsRepository.find({
+        where: { category },
+        take: page.getLimit(),
+        skip: page.getOffset(),
+        order: sortObj,
+      });
+    } else {
+      /**검색조건으로 이름이 포함되면 이름이 포함된것들 찾기 */
+      goods = await this.goodsRepository.find({
+        where: { category, name: Like(`%${name}%`) },
+        take: page.getLimit(),
+        skip: page.getOffset(),
+        order: sortObj,
+      });
+    }
     return goods;
   }
   /**카테고리 없이 페이지네이션 */
