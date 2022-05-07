@@ -70,12 +70,24 @@ export class GoodsService {
   async getPaginationByCategory(page, category, sortObj, name) {
     // console.log(category);
     // console.log(sortObj);
-    const goods = await this.goodsRepository.find({
-      where: { category, name: Like(`%${name}%`) },
-      take: page.getLimit(),
-      skip: page.getOffset(),
-      order: sortObj,
-    });
+    let goods;
+    /**검색조건으로 이름이 없으면 그냥 찾기 */
+    if (!name) {
+      goods = await this.goodsRepository.find({
+        where: { category },
+        take: page.getLimit(),
+        skip: page.getOffset(),
+        order: sortObj,
+      });
+    } else {
+      /**검색조건으로 이름이 포함되면 이름이 포함된것들 찾기 */
+      goods = await this.goodsRepository.find({
+        where: { category, name: Like(`%${name}%`) },
+        take: page.getLimit(),
+        skip: page.getOffset(),
+        order: sortObj,
+      });
+    }
     return goods;
   }
   /**카테고리 없이 페이지네이션 */
@@ -92,10 +104,7 @@ export class GoodsService {
 
   //특정 id를 가진 goods 가져오기
   async getGoodsById(id: number): Promise<Goods> {
-    // const found = await this.goodsRepository.findOne(id);
-    const query = await this.goodsRepository.createQueryBuilder('goods');
-    query.where('goods.id = :id', { id: id });
-    const found = query.getOne();
+    const found = await this.goodsRepository.findOne(id);
 
     if (!found) {
       throw new NotFoundException(
