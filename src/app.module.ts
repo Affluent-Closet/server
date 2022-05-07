@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { PurchaseController } from './purchase/purchase.controller';
 import { PurchaseModule } from './purchase/purchase.module';
 import { ReviewModule } from './review/review.module';
+import { PayModule } from './pay/pay.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { ReviewModule } from './review/review.module';
     AuthModule,
     PurchaseModule,
     ReviewModule,
+    PayModule,
   ],
   providers: [EmailService],
 })
