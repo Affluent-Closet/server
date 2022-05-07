@@ -104,10 +104,7 @@ export class GoodsService {
 
   //특정 id를 가진 goods 가져오기
   async getGoodsById(id: number): Promise<Goods> {
-    // const found = await this.goodsRepository.findOne(id);
-    const query = await this.goodsRepository.createQueryBuilder('goods');
-    query.where('goods.id = :id', { id: id });
-    const found = query.getOne();
+    const found = await this.goodsRepository.findOne(id);
 
     if (!found) {
       throw new NotFoundException(
