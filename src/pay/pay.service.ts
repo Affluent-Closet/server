@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
+import { PayQueryDto } from './dto/payQuery.dto';
 
 @Injectable()
 export class PayService {
   tossUrl = 'https://api.tosspayments.com/v1/payments/';
-  async successPay(req) {
+  async successPay(req: PayQueryDto) {
     try {
-      const pay = await axios.post(this.tossUrl + req.Query.paymentKey, {
+      const pay = await axios.post(this.tossUrl + req.paymentKey, {
         headers: {
           Authorization:
             'Basic ' +
@@ -14,8 +15,8 @@ export class PayService {
           'Content-Type': 'application/json',
         },
         json: {
-          orderId: req.query.orderId,
-          amount: req.query.amount,
+          orderId: req.orderId,
+          amount: req.amount,
         },
         responseType: 'json',
       });
