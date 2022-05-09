@@ -9,6 +9,7 @@ export class PayController {
 
   @Get('/success')
   successPay(@Req() req) {
+    console.log(req);
     return this.payService.successPay(req);
   }
 }
