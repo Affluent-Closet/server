@@ -3,7 +3,10 @@ import { Gender } from '../entities/review.entity';
 
 export class CreateReviewDto {
   @IsNotEmpty()
-  detail: string[];
+  detail: string;
+
+  @IsNotEmpty()
+  img: string[];
 
   @IsNotEmpty()
   height: number;
