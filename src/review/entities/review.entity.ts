@@ -22,10 +22,15 @@ export class Review extends Base {
   @PrimaryGeneratedColumn()
   id: number;
 
-  /**상품 상세정보 */
+  /**리뷰 사진 */
   @Column('text', { array: true })
   @IsArray()
-  detail: string[];
+  img: string[];
+
+  /**리뷰 텍스트 */
+  @Column('text', { array: true })
+  @IsArray()
+  detail: string;
 
   /**키 */
   @Column()
