@@ -48,6 +48,12 @@ export class User extends Base {
   role: Role;
 
   @Column()
+  address1: string;
+
+  @Column()
+  address2: string;
+
+  @Column()
   phoneNumber: string;
 
   @Column()
