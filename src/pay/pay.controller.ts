@@ -8,8 +8,8 @@ export class PayController {
 
   /**토스 페이먼츠 api에 결제 요청하는 함수 */
   @Post('/success')
-  successPay(@Body() req: PayQueryDto) {
-    console.log(req);
-    return this.payService.successPay(req);
+  successPay(@Body() payquerydto: PayQueryDto) {
+    console.log(payquerydto);
+    return this.payService.successPay(payquerydto);
   }
 }
