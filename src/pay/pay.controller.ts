@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Query, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Req, Res } from '@nestjs/common';
 import { PayQueryDto } from './dto/payQuery.dto';
 import { PayService } from './pay.service';
 
@@ -8,8 +8,8 @@ export class PayController {
   //   @Get()
   //   getPay(@Res() res) {}
 
-  @Get('/success')
-  successPay(@Query() req: PayQueryDto) {
+  @Post('/success')
+  successPay(@Body() req: PayQueryDto) {
     console.log(req);
     return this.payService.successPay(req);
   }
