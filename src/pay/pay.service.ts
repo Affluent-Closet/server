@@ -6,8 +6,10 @@ import { PayQueryDto } from './dto/payQuery.dto';
 export class PayService {
   tossUrl = 'https://api.tosspayments.com/v1/payments/';
   async successPay(req: PayQueryDto) {
+    console.log(req);
+    const { orderId, amount, paymentKey } = req;
     try {
-      const pay = await axios.post(this.tossUrl + req.paymentKey, {
+      const pay = await axios.post(this.tossUrl + paymentKey, {
         headers: {
           Authorization:
             'Basic ' +
@@ -15,8 +17,8 @@ export class PayService {
           'Content-Type': 'application/json',
         },
         json: {
-          orderId: req.orderId,
-          amount: req.amount,
+          orderId: orderId,
+          amount: amount,
         },
         responseType: 'json',
       });
