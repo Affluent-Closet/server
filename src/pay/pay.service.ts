@@ -6,6 +6,7 @@ import { PayQueryDto } from './dto/payQuery.dto';
 export class PayService {
   tossUrl = 'https://api.tosspayments.com/v1/payments/';
   async successPay(req: PayQueryDto) {
+    console.log(req);
     const { orderId, amount, paymentKey } = req;
     try {
       const pay = await axios.post(this.tossUrl + paymentKey, {
