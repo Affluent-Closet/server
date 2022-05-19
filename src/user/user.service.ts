@@ -75,7 +75,7 @@ export class UserService {
     await this.userRepository.save(user);
   }
 
-  //인증 이메일 보내기
+  /**인증 이메일 보내기 */
   private async sendMemberJoinEmail(email: string, signupVerifyToken: string) {
     await this.emailService.sendMemberJoinVerification(
       email,
@@ -91,6 +91,7 @@ export class UserService {
     return `This action returns a #${id} user`;
   }
 
+  /**이메일 인증 */
   async verifyEmail(signupVerifyToken: string): Promise<emailValidateData> {
     // TODO
     // 1. DB에서 signupVerifyToken으로 회원 가입 처리중인 유저가 있는지 조회하고 없다면 에러 처리
