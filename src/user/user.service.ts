@@ -32,6 +32,7 @@ export class UserService {
     private connection: Connection,
   ) {}
 
+  /**유저 생성함수 */
   async createUser(createUserDto: CreateUserDto) {
     const { email, password } = createUserDto;
     const userExist = await this.checkUserExists(email);
