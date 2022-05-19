@@ -33,16 +33,7 @@ export class UserService {
   ) {}
 
   async createUser(createUserDto: CreateUserDto) {
-    const {
-      name,
-      email,
-      password,
-      role,
-      phoneNumber,
-      profileImg,
-      address1,
-      address2,
-    } = createUserDto;
+    const { email, password } = createUserDto;
     const userExist = await this.checkUserExists(email);
     if (userExist) {
       throw new UnprocessableEntityException(
@@ -55,18 +46,13 @@ export class UserService {
     const hashedPassword = await bcrypt.hash(password, salt);
     /** jwt 토큰에 들어갈 서명부분 */
     const signupVerifyToken = uuid.v1();
+    const newcreateUserdto = {
+      ...createUserDto,
+      password: hashedPassword,
+      signupVerifyToken,
+    };
     try {
-      await this.saveUser(
-        name,
-        email,
-        hashedPassword,
-        signupVerifyToken,
-        role,
-        phoneNumber,
-        profileImg,
-        address1,
-        address2,
-      );
+      await this.saveUser(newcreateUserdto);
       await this.sendMemberJoinEmail(email, signupVerifyToken);
     } catch (e) {
       console.log(e);
@@ -82,27 +68,9 @@ export class UserService {
   }
 
   //사용자를 디비에 저장
-  private async saveUser(
-    name: string,
-    email: string,
-    password: string,
-    signupVerifyToken: string,
-    role: Role,
-    phoneNumber: string,
-    profileImg: string,
-    address1: string,
-    address2: string,
-  ) {
-    const user = new User();
-    user.name = name;
-    user.email = email;
-    user.password = password;
-    user.signupVerifyToken = signupVerifyToken;
-    user.role = role;
-    user.phoneNumber = phoneNumber;
-    user.profileImg = profileImg;
-    user.address1 = address1;
-    user.address2 = address2;
+  private async saveUser(newcreateUserdto: CreateUserDto) {
+    const user = this.userRepository.create({ ...newcreateUserdto });
+
     await this.userRepository.save(user);
   }
 
