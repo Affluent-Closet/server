@@ -45,4 +45,10 @@ export class CreateUserDto {
 
   @IsString()
   profileImg: string;
+
+  @IsString()
+  address1: string;
+
+  @IsString()
+  address2: string;
 }
