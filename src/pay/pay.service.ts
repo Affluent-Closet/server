@@ -30,7 +30,7 @@ export class PayService {
         // amount: response.body.totalAmount,
       };
     } catch (e) {
-      console.log(e);
+      console.log('토스 페이먼츠 에러 코드', e);
     }
   }
 }
