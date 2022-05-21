@@ -11,15 +11,10 @@ export class ReviewRepository extends Repository<Review> {
     goods: Goods,
     user: User,
   ) {
-    const { detail, height, weight, rating, gender } = createReviewDto;
+    const newReivew = { ...createReviewDto, goods, user };
+    console.log('newReview', newReivew);
     const review = await this.create({
-      detail,
-      height,
-      weight,
-      rating,
-      gender,
-      user,
-      goods,
+      ...newReivew,
     });
     await this.save(review);
     return review;
