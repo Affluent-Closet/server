@@ -19,9 +19,9 @@ export class ReviewService {
   async createReview(createReviewDto: CreateReviewDto) {
     const { goodsId, userId } = createReviewDto;
     const user = await this.userService.getUserInfo(userId);
-    console.log(user);
+    // console.log(user);
     const goods = await this.goodsService.getGoodsById(goodsId);
-    console.log(goods);
+    // console.log(goods);
     return this.reviewRepository.createReview(createReviewDto, goods, user);
   }
 
