@@ -34,7 +34,6 @@ export class GoodsService {
   async searchGoods(page: SearchGoodsDto) {
     //쿼리로 category가 들어있으면 카테고리에 맞는것들만 가져와야함
     const { sortBy, category, name } = page;
-    console.log(page);
     /**total : 물품갯수 카운트, sortObj : 분류기준 , found : 찾은 물풀들 */
     let total, sortObj, found;
     if (!sortBy) {
@@ -62,14 +61,11 @@ export class GoodsService {
       total = await this.goodsRepository.count({ category });
       found = await this.getPaginationByCategory(page, category, sortObj, name);
     }
-    console.log(found);
     return new Page(total, page.pageSize, found);
   }
 
   /**카테고리에 따른 페이지네이션*/
   async getPaginationByCategory(page, category, sortObj, name) {
-    // console.log(category);
-    // console.log(sortObj);
     let goods;
     /**검색조건으로 이름이 없으면 그냥 찾기 */
     if (!name) {
@@ -92,7 +88,6 @@ export class GoodsService {
   }
   /**카테고리 없이 페이지네이션 */
   async getPagination(page, sortObj, name) {
-    console.log(sortObj);
     const goods = await this.goodsRepository.find({
       where: { name: Like(`%${name}%`) },
       take: page.getLimit(),
