@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Page } from 'src/common/page/page';
 import { GoodsService } from 'src/goods/goods.service';
 import { UserService } from 'src/user/user.service';
 import { CreateReviewDto } from './dto/create-review.dto';
@@ -27,22 +28,26 @@ export class ReviewService {
 
   async getReviewsByGoods(page: GetReivewsByGoodsDto) {
     const { goodsId } = page;
-    const reviews = this.reviewRepository.find({
+    const foundGoods = await this.goodsService.getGoodsById(goodsId);
+    const total = await this.reviewRepository.count({ goods: foundGoods });
+    const reviews = await this.reviewRepository.find({
       where: { goods: goodsId },
       take: page.getLimit(),
       skip: page.getOffset(),
     });
-    return reviews;
+    return new Page(total, page.pageSize, reviews);
   }
 
   async getReviewsByUser(page: GetReviewsByUser) {
     const { userId } = page;
-    const reviews = this.reviewRepository.find({
+    const foundUser = await this.userService.getUserInfo(userId);
+    const total = await this.reviewRepository.count({ user: foundUser });
+    const reviews = await this.reviewRepository.find({
       where: { user: userId },
       take: page.getLimit(),
       skip: page.getOffset(),
     });
-    return reviews;
+    return new Page(total, page.pageSize, reviews);
   }
 
   //특정 id를 가진 review 가져오기
