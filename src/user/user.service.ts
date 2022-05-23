@@ -92,7 +92,7 @@ export class UserService {
   }
 
   /**이메일 인증 */
-  async verifyEmail(signupVerifyToken: string): Promise<emailValidateData> {
+  async verifyEmail(signupVerifyToken: string) {
     // TODO
     // 1. DB에서 signupVerifyToken으로 회원 가입 처리중인 유저가 있는지 조회하고 없다면 에러 처리
     const user = await this.userRepository.findOne({ signupVerifyToken });
@@ -107,12 +107,24 @@ export class UserService {
     });
 
     return {
-      user,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+      deletedAt: user.deletedAt,
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      address1: user.address1,
+      address2: user.address2,
+      phoneNumber: user.phoneNumber,
+      profileImg: user.profileImg,
+      purchaseInfoList: user.purchaseInfoList,
+      review: user.review,
       jwtString,
     };
   }
 
-  async login(userLoginDto: UserLoginDto): Promise<emailValidateData> {
+  async login(userLoginDto: UserLoginDto) {
     // TODO
     const { email, password } = userLoginDto;
     /** 비밀번호 암호화에 필요한 salt변수 */
@@ -132,7 +144,19 @@ export class UserService {
       });
 
       return {
-        user,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+        deletedAt: user.deletedAt,
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        address1: user.address1,
+        address2: user.address2,
+        phoneNumber: user.phoneNumber,
+        profileImg: user.profileImg,
+        purchaseInfoList: user.purchaseInfoList,
+        review: user.review,
         jwtString,
       };
     } else {
