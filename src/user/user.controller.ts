@@ -42,8 +42,8 @@ export class UserController {
     return await this.userService.login(userLoginDto);
   }
 
-  @Auth(['ANY'])
-  // @UseGuards(AuthGuard)
+  // @Auth(['ANY'])
+  @UseGuards(AuthGuard)
   @Get('/:id')
   getUserInfo(@Param('id') userId: string): Promise<User> {
     console.log(userId);
