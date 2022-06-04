@@ -60,12 +60,10 @@ export class User extends Base {
   profileImg: string;
 
   /**유저가 구입한 구매정보 id */
-  @OneToMany((type) => purchaseInfo, (purchaseInfo) => purchaseInfo.user, {
-    eager: true,
-  })
+  @OneToMany((type) => purchaseInfo, (purchaseInfo) => purchaseInfo.user)
   purchaseInfoList: purchaseInfo[];
 
   /**유저가 작성한 리뷰 id */
-  @OneToMany((type) => Review, (review) => review.user, { eager: true })
+  @OneToMany((type) => Review, (review) => review.user)
   review: Review[];
 }
