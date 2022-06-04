@@ -45,4 +45,9 @@ export class ReviewController {
   deleteReview(@Param('id', ParseIntPipe) id: number) {
     return this.reviewService.deleteReview(id);
   }
+
+  @Get('/goods/rating')
+  getGoodsRating(@Query() goodsId: GetReivewsByGoodsDto) {
+    return this.reviewService.getGoodsRating(goodsId);
+  }
 }
