@@ -20,9 +20,7 @@ export class ReviewService {
   async createReview(createReviewDto: CreateReviewDto) {
     const { goodsId, userId } = createReviewDto;
     const user = await this.userService.getUserInfo(userId);
-    // console.log(user);
     const goods = await this.goodsService.getGoodsById(goodsId);
-    // console.log(goods);
     return this.reviewRepository.createReview(createReviewDto, goods, user);
   }
 
@@ -86,5 +84,17 @@ export class ReviewService {
         `${id}로 찾은 review가 DB에 없습니다. id를 다시 한번 확인해 주세요.`,
       );
     }
+  }
+
+  /**상품 리뷰 별점 통계 함수 */
+  async getGoodsRating(goodsId: GetReivewsByGoodsDto) {
+    //상품아이디로 리뷰를 찾고 그 리뷰들의 별점을 전부 가져와서 통계를 함
+    const reviews = await this.getReviewsByGoods(goodsId);
+    const rating = reviews.items
+      .map((review) => review.rating)
+      .reduce((prev, curr) => prev + curr, 0);
+    const result = rating / reviews.items.length;
+    console.log(result);
+    return result;
   }
 }
