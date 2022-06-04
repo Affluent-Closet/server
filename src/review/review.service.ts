@@ -86,15 +86,51 @@ export class ReviewService {
     }
   }
 
-  /**상품 리뷰 별점 통계 함수 */
+  /**상품 리뷰 별점 통계 함수,
+  1. 리턴값으로 전체 별점이랑 각 별점 별로 개수도 보내줘야함
+  2. 상품아이디로 리뷰를 찾고 그 리뷰들의 별점을 전부 가져와서 통계를 함
+  */
   async getGoodsRating(goodsId: GetReivewsByGoodsDto) {
-    //상품아이디로 리뷰를 찾고 그 리뷰들의 별점을 전부 가져와서 통계를 함
+    /**상품 아이디로 리뷰 찾기 */
     const reviews = await this.getReviewsByGoods(goodsId);
+    const countPoint = {
+      onePoint: 0,
+      twoPoint: 0,
+      threePoint: 0,
+      fourPoint: 0,
+      fivePoint: 0,
+    };
+
+    /**리뷰 안의 별점 총점 계산 */
     const rating = reviews.items
       .map((review) => review.rating)
       .reduce((prev, curr) => prev + curr, 0);
-    const result = rating / reviews.items.length;
-    console.log(result);
-    return result;
+
+    /**전체 별점 */
+    const totoalRating = rating / reviews.items.length;
+
+    /**리뷰 안의 각 별점 갯수 계산 */
+    reviews.items.map((review) => {
+      switch (review.rating) {
+        case 1:
+          countPoint.onePoint++;
+          break;
+        case 2:
+          countPoint.twoPoint++;
+          break;
+        case 3:
+          countPoint.threePoint++;
+          break;
+        case 4:
+          countPoint.fourPoint++;
+          break;
+        case 5:
+          countPoint.fivePoint++;
+          break;
+        default:
+          break;
+      }
+    });
+    return { countPoint, totoalRating };
   }
 }
