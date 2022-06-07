@@ -66,7 +66,7 @@ export class Goods extends Base {
 
   /**상품 리뷰 */
   @OneToMany((type) => Review, (review) => review.goods, {
-    eager: true,
+    eager: false,
   })
   review: Review[];
 }
