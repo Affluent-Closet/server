@@ -49,7 +49,7 @@ export class Review extends Base {
   gender: Gender;
 
   /**리뷰 상품id */
-  @ManyToOne((type) => Goods, (goods) => goods.review, { eager: false })
+  @ManyToOne((type) => Goods, (goods) => goods.review, { eager: true })
   goods: Goods;
 
   /**리뷰 작성한 유저id */
