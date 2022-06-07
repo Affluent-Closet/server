@@ -107,7 +107,7 @@ export class ReviewService {
       .reduce((prev, curr) => prev + curr, 0);
 
     /**전체 별점 */
-    const totoalRating = rating / reviews.items.length;
+    const averagePoint = rating / reviews.items.length;
 
     /**리뷰 안의 각 별점 갯수 계산 */
     reviews.items.map((review) => {
@@ -131,6 +131,6 @@ export class ReviewService {
           break;
       }
     });
-    return { countPoint, totoalRating };
+    return { countPoint, averagePoint };
   }
 }
