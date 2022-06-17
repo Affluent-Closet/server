@@ -13,19 +13,6 @@
 <br/>
 <br/>
 
-## 프로젝트 벤치마킹
-
-<img src="https://user-images.githubusercontent.com/67010993/174297492-cd41aa45-3886-4075-a764-76c67cc12dd6.png" width="300px"/>
-
-<br/>
-<br/>
-
-## 프로젝트 기획
-
-<img width="500" alt="스크린샷 2022-06-17 오후 9 58 14" src="https://user-images.githubusercontent.com/67010993/174303005-658fe4df-3da9-4fca-b1eb-b020c50a5c26.png">
-
-<br/>
-<br/>
 
 ## 핵심기능 💻
 
