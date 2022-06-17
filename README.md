@@ -1,6 +1,6 @@
 <div align = "center">
 
-  # Affluent-Closet
+  # 🛒Affluent-Closet
   
   👉<a href="https://affluent-closet.netlify.app/">쇼핑몰 바로가기</a>👈
  
