@@ -2,6 +2,9 @@
 
   # 🛒Affluent-Closet
   
+  <img src="https://user-images.githubusercontent.com/67010993/174305649-828841ef-6ba9-438a-bbbf-1934f5392776.png"/>
+
+  
   👉<a href="https://affluent-closet.netlify.app/">쇼핑몰 바로가기</a>👈
  
 </div>
