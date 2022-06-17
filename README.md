@@ -30,6 +30,9 @@
 * Heroku
 * Typescript
 
+## 데이터베이스 ERD
+
+
 ## 프로젝트를 통해 배운점
 
 * NestJS 처음 사용해 봤습니다. NestJS <a href="https://wikidocs.net/book/7059">NestJS로 배우는 벡엔드 프로그래밍</a> 전자책을 보고 따라하면서 모르는 게 생기면 <a href="https://docs.nestjs.com/">NestJS 공식문서</a>를 찾아보거나 velog, stackoverflow 등등 구글링을 통해 공부하였습니다.
