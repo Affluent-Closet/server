@@ -32,7 +32,7 @@
 
 ## 데이터베이스 ERD
 
-<img width="689" alt="스크린샷 2022-06-17 오후 3 28 07" src="https://user-images.githubusercontent.com/67010993/174239963-bbab1761-78ff-41b0-a475-faaffc686046.png">
+<img width="644" alt="스크린샷 2022-06-17 오후 3 38 50" src="https://user-images.githubusercontent.com/67010993/174240464-55a3e7e2-5f86-470b-94ce-b46fd7c37684.png">
 
 ## 프로젝트를 통해 배운점
 
