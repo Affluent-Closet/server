@@ -1,4 +1,3 @@
-import { type } from 'os';
 import { Base } from 'src/common/entities/base.entity';
 import { Goods } from 'src/goods/entities/goods.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';

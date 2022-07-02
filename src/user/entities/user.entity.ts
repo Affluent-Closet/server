@@ -3,7 +3,6 @@ import { IsEmail, IsEnum, IsString } from 'class-validator';
 import { type } from 'os';
 import { Base } from 'src/common/entities/base.entity';
 import { Order } from 'src/order/entities/order.entity';
-import { purchaseInfo } from 'src/purchase/entities/purchaseInfo.entity';
 import { Review } from 'src/review/entities/review.entity';
 import {
   Entity,
@@ -60,10 +59,6 @@ export class User extends Base {
 
   @Column()
   profileImg: string;
-
-  /**유저가 구입한 구매정보 id */
-  @OneToMany((type) => purchaseInfo, (purchaseInfo) => purchaseInfo.user)
-  purchaseInfoList: purchaseInfo[];
 
   /**유저가 작성한 리뷰 id */
   @OneToMany((type) => Review, (review) => review.user)

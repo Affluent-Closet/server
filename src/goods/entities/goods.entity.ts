@@ -1,5 +1,4 @@
 import { IsArray } from 'class-validator';
-import { type } from 'os';
 import { Base } from 'src/common/entities/base.entity';
 import { OrderGoods } from 'src/order/entities/orderGoods.entity';
 import { Review } from 'src/review/entities/review.entity';
