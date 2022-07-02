@@ -12,6 +12,7 @@ import { PurchaseController } from './purchase/purchase.controller';
 import { PurchaseModule } from './purchase/purchase.module';
 import { ReviewModule } from './review/review.module';
 import { PayModule } from './pay/pay.module';
+import { OrderModule } from './order/order.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { PayModule } from './pay/pay.module';
     PurchaseModule,
     ReviewModule,
     PayModule,
+    OrderModule,
   ],
   providers: [EmailService],
 })
