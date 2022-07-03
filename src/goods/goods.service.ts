@@ -20,8 +20,8 @@ export class GoodsService {
   ) {}
 
   //goods 생성
-  createGoods(createGoodsDto: CreateGoodsDto): Promise<Goods> {
-    return this.goodsRepository.createGoods(createGoodsDto);
+  async createGoods(createGoodsDto: CreateGoodsDto): Promise<Goods> {
+    return await this.goodsRepository.createGoods(createGoodsDto);
   }
 
   /**상품 사이즈 생성 */
