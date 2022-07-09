@@ -118,7 +118,6 @@ export class UserService {
       address2: user.address2,
       phoneNumber: user.phoneNumber,
       profileImg: user.profileImg,
-      purchaseInfoList: user.purchaseInfoList,
       review: user.review,
       jwtString,
     };
@@ -155,7 +154,6 @@ export class UserService {
         address2: user.address2,
         phoneNumber: user.phoneNumber,
         profileImg: user.profileImg,
-        purchaseInfoList: user.purchaseInfoList,
         review: user.review,
         jwtString,
       };
