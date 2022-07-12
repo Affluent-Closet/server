@@ -55,6 +55,7 @@ export class Order extends Base {
   /**주문 상품 */
   @OneToMany((type) => OrderGoods, (orderGoods) => orderGoods.order, {
     eager: true,
+    cascade: true,
   })
-  orderGoods: OrderGoods;
+  orderGoods: OrderGoods[];
 }
