@@ -8,8 +8,6 @@ import { UserModule } from './user/user.module';
 import { EmailService } from './email/email.service';
 import { EmailModule } from './email/email.module';
 import { AuthModule } from './auth/auth.module';
-import { PurchaseController } from './purchase/purchase.controller';
-import { PurchaseModule } from './purchase/purchase.module';
 import { ReviewModule } from './review/review.module';
 import { PayModule } from './pay/pay.module';
 import { OrderModule } from './order/order.module';
@@ -25,7 +23,6 @@ import { OrderModule } from './order/order.module';
     UserModule,
     EmailModule,
     AuthModule,
-    PurchaseModule,
     ReviewModule,
     PayModule,
     OrderModule,

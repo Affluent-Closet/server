@@ -1,5 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthService } from 'src/auth/auth.service';
+import { EmailService } from 'src/email/email.service';
+import { GoodsSizeRepository } from 'src/goods/goods-size.repository';
 import { GoodsRepository } from 'src/goods/goods.repository';
 import { GoodsService } from 'src/goods/goods.service';
 import { UserRepository } from 'src/user/user.repository';
@@ -15,10 +18,17 @@ import { OrderGoodsRepository } from './orderGoods.repository';
       OrderRepository,
       OrderGoodsRepository,
       GoodsRepository,
+      GoodsSizeRepository,
       UserRepository,
     ]),
   ],
   controllers: [OrderController],
-  providers: [OrderService, GoodsService, UserService],
+  providers: [
+    OrderService,
+    GoodsService,
+    UserService,
+    EmailService,
+    AuthService,
+  ],
 })
 export class OrderModule {}
