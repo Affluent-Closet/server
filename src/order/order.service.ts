@@ -66,6 +66,8 @@ export class OrderService {
       const newOrderGoods = await this.orderGoodsRepository.createOrderGoods(
         createNewOrderGoodsData,
       );
+      newOrderGoods.order = order;
+      await this.orderGoodsRepository.save(newOrderGoods);
       orderGoodsArr.push(newOrderGoods);
     });
     order.orderGoods = orderGoodsArr;

@@ -32,6 +32,7 @@ export class CreateOrderDto {
   @IsNotEmpty()
   address2: string;
 
+  @IsNotEmpty()
   request: string;
 
   /**주문 상품은 여러 종류가 될수 있음 */
