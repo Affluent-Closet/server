@@ -1,5 +1,6 @@
 import { IsArray } from 'class-validator';
 import { Base } from 'src/common/entities/base.entity';
+import { OrderGoods } from 'src/order/entities/orderGoods.entity';
 import { Review } from 'src/review/entities/review.entity';
 import {
   Column,
@@ -69,4 +70,8 @@ export class Goods extends Base {
     eager: false,
   })
   review: Review[];
+
+  /**주문 상품 */
+  @OneToMany((type) => OrderGoods, (orderGoods) => orderGoods.goods)
+  orderGoods: OrderGoods;
 }
