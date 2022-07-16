@@ -13,7 +13,6 @@ import { UserLoginDto } from './dto/user-login.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Role, User } from './entities/user.entity';
 import { UserRepository } from './user.repository';
-import { Connection } from 'typeorm';
 import { AuthService } from 'src/auth/auth.service';
 import * as bcrypt from 'bcryptjs';
 
@@ -29,7 +28,6 @@ export class UserService {
     private authService: AuthService,
     @InjectRepository(UserRepository)
     private userRepository: UserRepository,
-    private connection: Connection,
   ) {}
 
   /**유저 생성함수 */

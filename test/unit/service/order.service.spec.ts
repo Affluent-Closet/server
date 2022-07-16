@@ -1,15 +1,31 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { GoodsRepository } from 'src/goods/goods.repository';
+import { GoodsService } from 'src/goods/goods.service';
 import { CreateOrderDto } from 'src/order/dto/create-order.dto';
+import { Order } from 'src/order/entities/order.entity';
 import { OrderRepository } from 'src/order/order.repository';
 import { OrderService } from 'src/order/order.service';
+import { UserRepository } from 'src/user/user.repository';
+import { UserService } from 'src/user/user.service';
 
 describe('OrderService Test', () => {
   let orderService: OrderService;
   let orderRepository: OrderRepository;
+  let goodsService: GoodsService;
+  let goodsRepository: GoodsRepository;
+  let userService: UserService;
+  let userRepository: UserRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [OrderService, OrderRepository],
+      providers: [
+        OrderService,
+        OrderRepository,
+        GoodsService,
+        GoodsRepository,
+        UserService,
+        UserRepository,
+      ],
     }).compile();
 
     orderService = module.get<OrderService>(OrderService);
@@ -45,7 +61,7 @@ describe('OrderService Test', () => {
         },
       ];
 
-      const createOrderDto: CreateOrderDto = {
+      const requestDto: CreateOrderDto = {
         orderName: orderName,
         userId: userId,
         orderNumber: orderNumber,
@@ -57,6 +73,33 @@ describe('OrderService Test', () => {
         request: request,
         orderGoodsDataArr: orderGoodsDataArr,
       };
+
+      const createdOrderEntity = Order.of(requestDto);
+      const savedOrder = Order.of({
+        id: 8,
+        orderName: orderName,
+        orderNumber: orderNumber,
+        receiver: receiver,
+        receiverPhoneNum: receiverPhoneNum,
+        payment: payment,
+        address1: address1,
+        address2: address2,
+        request: request,
+      });
+
+      const orderRepositoryCreateSpy = jest
+        .spyOn(orderRepository, 'create')
+        .mockReturnValue(createdOrderEntity);
+
+      //   const orderRepositorySaveSpy = jest
+      //     .spyOn(orderRepository, 'save')
+      //     .mockReturnValue(savedOrder);
+
+      const result = await orderService.createOrder(requestDto);
+
+      expect(orderRepositoryCreateSpy).toBeCalledWith(requestDto);
+      //   expect(orderRepositorySaveSpy).toBeCalledWith(createdOrderEntity);
+      expect(result).toBe(savedOrder);
     });
   });
 });

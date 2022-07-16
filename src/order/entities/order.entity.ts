@@ -58,4 +58,12 @@ export class Order extends Base {
     cascade: true,
   })
   orderGoods: OrderGoods[];
+
+  static of(params: Partial<Order>): Order {
+    const order = new Order();
+
+    Object.assign(order, params);
+
+    return order;
+  }
 }
