@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { env } from 'process';
 import { AuthService } from 'src/auth/auth.service';
 import { EmailService } from 'src/email/email.service';
 import { GoodsSizeRepository } from 'src/goods/goods-size.repository';
@@ -14,6 +16,10 @@ import { OrderGoodsRepository } from './orderGoods.repository';
 
 @Module({
   imports: [
+    JwtModule.register({
+      secret: env.JWT_REFRESH_TOKEN_SECRET,
+      signOptions: { expiresIn: '60s' },
+    }),
     TypeOrmModule.forFeature([
       OrderRepository,
       OrderGoodsRepository,

@@ -1,6 +1,10 @@
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import {
+  ClassSerializerInterceptor,
+  INestApplication,
+  ValidationPipe,
+} from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -20,7 +24,12 @@ async function bootstrap() {
       // disableErrorMessages: true,
     }),
   );
+  setNestApp(app);
   app.enableCors();
   await app.listen(parseInt(process.env.PORT) || 3000);
 }
 bootstrap();
+
+export function setNestApp<T extends INestApplication>(app: T): void {
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+}
