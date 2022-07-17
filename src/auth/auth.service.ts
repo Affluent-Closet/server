@@ -1,4 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import * as jwt from 'jsonwebtoken';
 
 interface User {
@@ -9,6 +10,8 @@ interface User {
 
 @Injectable()
 export class AuthService {
+  constructor(private jwtService: JwtService) {}
+
   getCookieWithJwtAccessToken(user: User) {
     const payload = { ...user };
 
@@ -17,6 +20,11 @@ export class AuthService {
       audience: 'AffluentCloset',
       issuer: 'AffluentCloset',
     });
+  }
+
+  getCookieWithJwtRefreshToken(user: User) {
+    const payload = { ...user };
+    // const token = this.
   }
 
   verify(jwtString: string) {

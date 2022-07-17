@@ -61,9 +61,10 @@ export class User extends Base {
   @Column()
   profileImg: string;
 
+  /**리프레쉬 토큰 발급여부 확인하는 항목 */
   @Column({ nullable: true })
   @Exclude()
-  refreshToken?: string;
+  currentHashedRefreshToken?: string;
 
   /**유저가 작성한 리뷰 id */
   @OneToMany((type) => Review, (review) => review.user)
