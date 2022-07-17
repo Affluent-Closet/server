@@ -24,6 +24,7 @@ export class User extends Base {
   //자동으로 uuid 넣어서 생성해줌
   @PrimaryGeneratedColumn('uuid')
   @ApiProperty({ type: String, required: false, description: '사용자 UUID' })
+  @Exclude()
   id: string;
 
   @Column({ length: 30 })
