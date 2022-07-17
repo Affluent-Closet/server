@@ -186,4 +186,30 @@ export class UserService {
       );
     }
   }
+
+  /**Refresh 토큰 암호화 해서 저장 */
+  async setCurrentRefreshToken(refreshToken: string, id: string) {
+    const currentHashedRefreshToken = await bcrypt.hash(refreshToken, 10);
+    await this.userRepository.update(id, { currentHashedRefreshToken });
+  }
+
+  /**리프레시 토큰 */
+  async getUserIfRefreshTokenMatches(refreshToken: string, id: string) {
+    const user = await this.getUserInfo(id);
+
+    const isRefreshTokenMatching = await bcrypt.compare(
+      refreshToken,
+      user.currentHashedRefreshToken,
+    );
+
+    if (isRefreshTokenMatching) {
+      return user;
+    }
+  }
+
+  async removeRefreshToken(id: string) {
+    return this.userRepository.update(id, {
+      currentHashedRefreshToken: null,
+    });
+  }
 }
