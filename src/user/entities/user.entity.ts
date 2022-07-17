@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
 import { IsEmail, IsEnum, IsString } from 'class-validator';
 import { type } from 'os';
 import { Base } from 'src/common/entities/base.entity';
@@ -61,6 +62,7 @@ export class User extends Base {
   profileImg: string;
 
   @Column({ nullable: true })
+  @Exclude()
   refreshToken?: string;
 
   /**유저가 작성한 리뷰 id */
