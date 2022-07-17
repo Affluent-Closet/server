@@ -107,18 +107,6 @@ export class UserService {
     });
 
     return {
-      // createdAt: user.createdAt,
-      // updatedAt: user.updatedAt,
-      // deletedAt: user.deletedAt,
-      // id: user.id,
-      // name: user.name,
-      // email: user.email,
-      // role: user.role,
-      // address1: user.address1,
-      // address2: user.address2,
-      // phoneNumber: user.phoneNumber,
-      // profileImg: user.profileImg,
-      // review: user.review,
       user,
       accessToken,
     };
@@ -144,18 +132,6 @@ export class UserService {
       });
 
       return {
-        // createdAt: user.createdAt,
-        // updatedAt: user.updatedAt,
-        // deletedAt: user.deletedAt,
-        // id: user.id,
-        // name: user.name,
-        // email: user.email,
-        // role: user.role,
-        // address1: user.address1,
-        // address2: user.address2,
-        // phoneNumber: user.phoneNumber,
-        // profileImg: user.profileImg,
-        // review: user.review,
         user,
         accessToken,
       };

@@ -1,6 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as jwt from 'jsonwebtoken';
+import { env } from 'process';
 
 interface User {
   id: string;
@@ -24,12 +25,23 @@ export class AuthService {
 
   getCookieWithJwtRefreshToken(user: User) {
     const payload = { ...user };
-    // const token = this.
+    const token = this.jwtService.sign(payload, {
+      secret: env.JWT_REFRESH_TOKEN_SECRET,
+      expiresIn: env.JWT_REFRESH_TOKEN_EXPIRATION_TIME,
+    });
+
+    return {
+      refreshToken: token,
+      domain: 'localhost',
+      path: '/',
+      httpOnly: true,
+      maxAge: Number(env.JWT_REFRESH_TOKEN_EXPIRATION_TIME) * 1000,
+    };
   }
 
-  verify(jwtString: string) {
+  verify(accessToken: string) {
     try {
-      const payload = jwt.verify(jwtString, process.env.JWT_SECRET) as (
+      const payload = jwt.verify(accessToken, process.env.JWT_SECRET) as (
         | jwt.JwtPayload
         | string
       ) &
