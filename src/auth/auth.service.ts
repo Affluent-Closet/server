@@ -9,7 +9,7 @@ interface User {
 
 @Injectable()
 export class AuthService {
-  login(user: User) {
+  getCookieWithJwtAccessToken(user: User) {
     const payload = { ...user };
 
     return jwt.sign(payload, process.env.JWT_SECRET, {

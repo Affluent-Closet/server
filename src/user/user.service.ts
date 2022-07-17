@@ -11,7 +11,7 @@ import * as uuid from 'uuid';
 import { EmailService } from 'src/email/email.service';
 import { UserLoginDto } from './dto/user-login.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Role, User } from './entities/user.entity';
+import { User } from './entities/user.entity';
 import { UserRepository } from './user.repository';
 import { AuthService } from 'src/auth/auth.service';
 import * as bcrypt from 'bcryptjs';
@@ -98,7 +98,7 @@ export class UserService {
       throw new NotFoundException('유저가 존재하지 않습니다.');
     }
     // 2. 바로 로그인 상태가 되도록 JWT를 발급
-    const accessToken = this.authService.login({
+    const accessToken = this.authService.getCookieWithJwtAccessToken({
       id: user.id,
       name: user.name,
       email: user.email,
@@ -134,7 +134,7 @@ export class UserService {
     }
     // 2. 찾은 유저와 비밀번호가 같은지를 확인하고 JWT를 발급
     if (user && (await bcrypt.compare(password, user.password))) {
-      const accessToken = this.authService.login({
+      const accessToken = this.authService.getCookieWithJwtAccessToken({
         id: user.id,
         name: user.name,
         email: user.email,
