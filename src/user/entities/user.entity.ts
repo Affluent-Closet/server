@@ -38,6 +38,7 @@ export class User extends Base {
 
   @Column()
   @ApiProperty({ type: String, description: '사용자 암호' })
+  @Exclude()
   password: string;
 
   @Column({ length: 60 })
