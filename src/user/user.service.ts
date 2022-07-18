@@ -123,9 +123,15 @@ export class UserService {
         '유저가 존재하지 않습니다. 이메일을 다시한번 확인하세요',
       );
     }
-    // 2. 찾은 유저와 비밀번호가 같은지를 확인하고 JWT(accessToken)을 발급
+    // 2. 찾은 유저와 비밀번호가 같은지를 확인하고 JWT(accessToken, refreshToken)을 발급
     if (user && (await bcrypt.compare(password, user.password))) {
       const accessToken = this.authService.getCookieWithJwtAccessToken({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      });
+
+      const refreshToken = this.authService.getCookieWithJwtRefreshToken({
         id: user.id,
         name: user.name,
         email: user.email,
@@ -134,6 +140,7 @@ export class UserService {
       return {
         user,
         accessToken,
+        refreshToken,
       };
     } else {
       throw new UnauthorizedException(
